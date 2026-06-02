@@ -196,7 +196,7 @@ document.getElementById('btn-modal-finish')?.addEventListener('click', () => {
     localStorage.removeItem('selected_service_price');
 
     // Redirigir al inicio
-    window.location.href = 'Inicio.html';
+    window.location.href = 'index.html';
 });
 
 // Init
