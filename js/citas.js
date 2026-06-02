@@ -12,14 +12,35 @@ const dashboardMain = document.getElementById('cts-dashboard-main');
 // PIN de acceso del barbero
 const SECURITY_PIN = "1234";
 
+function showLockScreen() {
+    lockScreen?.classList.remove('d-none');
+    dashboardMain?.classList.add('d-none');
+    if (pinInput) {
+        pinInput.value = '';
+        pinInput.focus();
+    }
+    if (window._citasUnsubscribe) {
+        window._citasUnsubscribe();
+        window._citasUnsubscribe = null;
+    }
+}
+
+function showDashboard() {
+    lockScreen?.classList.add('d-none');
+    dashboardMain?.classList.remove('d-none');
+    loadDashboardData();
+}
+
+function initAuth() {
+    showLockScreen();
+}
+
 if (pinForm) {
     pinForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         if (pinInput.value === SECURITY_PIN) {
-            lockScreen.classList.add('d-none');
-            dashboardMain.classList.remove('d-none');
-            loadDashboardData(); // Iniciar escucha en tiempo real
+            showDashboard();
         } else {
             alert("PIN incorrecto. Autenticación denegada.");
             pinInput.value = '';
@@ -28,22 +49,9 @@ if (pinForm) {
     });
 }
 
-// Cerrar sesión / volver a bloquear
-document.getElementById('btn-logout')?.addEventListener('click', () => {
-    if (lockScreen && dashboardMain) {
-        lockScreen.classList.remove('d-none');
-        dashboardMain.classList.add('d-none');
-        if (pinInput) {
-            pinInput.value = '';
-            pinInput.focus();
-        }
-        // Detener listener en tiempo real si existe
-        if (window._citasUnsubscribe) {
-            window._citasUnsubscribe();
-            window._citasUnsubscribe = null;
-        }
-    }
-});
+document.getElementById('btn-logout')?.addEventListener('click', showLockScreen);
+
+document.addEventListener('DOMContentLoaded', initAuth);
 
 function getServicePrice(serviceName, storedPrice) {
     if (storedPrice) return Number(storedPrice) || 0;
