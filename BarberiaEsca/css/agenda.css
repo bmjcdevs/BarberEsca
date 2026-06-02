@@ -1,0 +1,610 @@
+/* =====================================================
+   FOCUS BARBER STUDIO - agenda.css
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+/* === CSS Variables === */
+:root {
+  --bg-dark: #080808;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --primary-red: #e60000;
+  --primary-red-hover: #ff2a2a;
+  --primary-red-glow: rgba(230, 0, 0, 0.25);
+  --text-white: #ffffff;
+  --text-gray: #a5a5a5;
+  --text-muted: #555555;
+  --border-color: #202020;
+  --border-red: rgba(230, 0, 0, 0.4);
+  --font-title: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* === Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-dark);
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.text-accent { color: var(--primary-red) !important; }
+
+/* === Custom Scrollbar === */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-red); }
+
+/* =====================================================
+   HEADER / NAVBAR
+   ===================================================== */
+.agd-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(8, 8, 8, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.agd-header .navbar {
+  padding: 18px 0;
+}
+
+.agd-logo {
+  font-family: var(--font-title) !important;
+  font-size: 1.1rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-white) !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.agd-logo-accent {
+  color: var(--primary-red);
+}
+
+.agd-nav-link {
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.6) !important;
+  padding: 6px 14px !important;
+  position: relative;
+  transition: var(--transition);
+}
+
+.agd-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  width: 0;
+  height: 2px;
+  background: var(--primary-red);
+  transition: var(--transition);
+}
+
+.agd-nav-link:hover,
+.agd-nav-link.active {
+  color: var(--text-white) !important;
+}
+
+.agd-nav-link:hover::after,
+.agd-nav-link.active::after {
+  width: calc(100% - 28px);
+}
+
+.agd-btn-book {
+  background-color: var(--primary-red);
+  color: var(--text-white) !important;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 10px 22px;
+  border-radius: 0;
+  box-shadow: 0 3px 12px var(--primary-red-glow);
+  transition: var(--transition);
+}
+
+.agd-btn-book:hover {
+  background-color: var(--primary-red-hover);
+  box-shadow: 0 5px 18px rgba(255,42,42,0.45);
+  transform: translateY(-2px);
+  color: var(--text-white) !important;
+}
+
+.agd-hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.agd-hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--text-white);
+  transition: var(--transition);
+}
+
+.agd-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.agd-hamburger.active span:nth-child(2) { opacity: 0; }
+.agd-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: var(--bg-dark);
+    border-top: 1px solid var(--border-color);
+    padding: 20px 0;
+    margin-top: 12px;
+  }
+  .agd-nav-link { padding: 10px 0 !important; }
+  .agd-nav-link::after { left: 0; }
+  .agd-nav-link:hover::after, .agd-nav-link.active::after { width: 30px; }
+}
+
+/* =====================================================
+   PAGE HERO / TITLE
+   ===================================================== */
+.agd-hero {
+  padding: 60px 0 30px;
+}
+
+.agd-badge {
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary-red);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.agd-hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 0px;
+  color: var(--text-white);
+  text-transform: uppercase;
+  font-family: var(--font-title);
+  border-left: 4px solid var(--primary-red);
+  padding-left: 18px;
+}
+
+/* =====================================================
+   MAIN CONTENT
+   ===================================================== */
+.agd-main {
+  flex: 1;
+  padding: 30px 0 80px;
+}
+
+/* === CALENDAR CARD === */
+.agd-calendar-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 36px;
+  height: 100%;
+}
+
+.agd-calendar-header {
+  margin-bottom: 30px;
+}
+
+.agd-cal-month-title {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-white);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.agd-cal-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.agd-cal-btn:hover {
+  border-color: var(--primary-red);
+  background-color: rgba(230, 0, 0, 0.05);
+  color: var(--primary-red);
+}
+
+/* Grid Styles */
+.agd-calendar-grid {
+  width: 100%;
+}
+
+.agd-grid-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.agd-grid-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+/* Individual Day Box */
+.agd-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-white);
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.agd-day:hover:not(.disabled):not(.selected) {
+  border-color: var(--border-red);
+  background-color: var(--bg-card-hover);
+}
+
+.agd-day.selected {
+  background-color: var(--primary-red) !important;
+  border-color: var(--primary-red) !important;
+  color: var(--text-white) !important;
+}
+
+/* Red Tag badge inside day */
+.agd-day-selected-badge {
+  font-size: 0.48rem;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+  color: var(--text-white);
+  opacity: 0.9;
+}
+
+.agd-day.disabled {
+  color: var(--text-muted);
+  border-color: transparent;
+  cursor: not-allowed;
+  opacity: 0.25;
+}
+
+/* Calendar Legend */
+.agd-calendar-legend {
+  margin-top: 36px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+}
+
+.agd-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agd-legend-box {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.agd-legend-selected {
+  background-color: var(--primary-red);
+}
+
+.agd-legend-available {
+  border: 1px solid var(--border-color);
+}
+
+.agd-legend-text {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-gray);
+}
+
+/* === TIME SELECTION COLUMN === */
+.agd-time-selection-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.agd-section-title {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-white);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.agd-section-hours {
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.agd-time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 576px) {
+  .agd-time-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.agd-time-btn {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  font-family: var(--font-title);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 14px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.agd-time-btn:hover:not(.disabled):not(.selected) {
+  border-color: var(--border-red);
+  background-color: var(--bg-card-hover);
+}
+
+.agd-time-btn.selected {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  color: var(--text-white);
+  box-shadow: 0 4px 15px var(--primary-red-glow);
+}
+
+.agd-time-btn.disabled {
+  border-color: transparent;
+  color: #2c2c2c;
+  background-color: rgba(255,255,255,0.01);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* === SUMMARY & CONFIRM BLOCK === */
+.agd-summary-card {
+  background-color: rgba(17, 17, 17, 0.4);
+  border: 1px solid var(--border-color);
+  padding: 24px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.agd-summary-label {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.agd-summary-value {
+  font-family: var(--font-title);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--text-white);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.agd-btn-confirm {
+  background-color: var(--primary-red);
+  border: none;
+  color: var(--text-white);
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 22px 0;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 18px var(--primary-red-glow);
+}
+
+.agd-btn-confirm:hover {
+  background-color: var(--primary-red-hover);
+  box-shadow: 0 6px 26px rgba(255,42,42,0.5);
+}
+
+/* === WATERMARK BACKGROUND === */
+.agd-bg-radar {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+.agd-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-dark);
+  padding: 24px 0;
+}
+
+.agd-footer-logo {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.agd-footer-copy {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-title);
+  font-weight: 600;
+}
+
+.agd-footer-links {
+  gap: 20px !important;
+}
+
+.agd-footer-link {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+}
+
+.agd-footer-link:hover {
+  color: var(--primary-red);
+}
+
+/* === SUCCESS MODAL PREMIUM === */
+.agd-success-modal .modal-content {
+  background-color: var(--bg-card);
+  border: 1px solid var(--primary-red);
+  border-radius: 0;
+  box-shadow: 0 10px 40px rgba(230, 0, 0, 0.15);
+}
+
+.agd-success-modal .modal-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(230, 0, 0, 0.1);
+  border: 2px solid var(--primary-red);
+  color: var(--primary-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agd-success-modal .modal-title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text-white);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.agd-success-modal .modal-desc {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.agd-btn-modal-close {
+  background-color: var(--primary-red);
+  color: var(--text-white) !important;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 30px;
+  display: inline-block;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.agd-btn-modal-close:hover {
+  background-color: var(--primary-red-hover);
+  box-shadow: 0 4px 15px rgba(255, 42, 42, 0.4);
+}
+
+/* =====================================================
+   RESPONSIVE MODIFIERS
+   ===================================================== */
+@media (max-width: 991px) {
+  .agd-hero { padding: 44px 0 20px; }
+  .agd-main { padding: 20px 0 60px; }
+}
+
+@media (max-width: 576px) {
+  .agd-hero-title { font-size: 2rem; letter-spacing: -0.5px; }
+  .agd-calendar-card { padding: 24px; }
+  
+  .agd-footer .container {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .agd-footer-right {
+    text-align: left !important;
+  }
+  
+  .agd-footer-links {
+    justify-content: flex-start !important;
+  }
+}

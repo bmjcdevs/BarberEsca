@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación Focus - Focus Barber Studio</title>
+    <meta name="description"
+        content="Finaliza tu reserva de precisión en Focus Barber Studio. Completa tu información.">
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/confirmacion.css">
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="cfm-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand cfm-logo" href="Inicio.html">
+                    <span class="cfm-logo-accent">FOCUS</span> BARBER STUDIO
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#cfmNavbar" aria-controls="cfmNavbar" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <div class="cfm-hamburger" id="cfm-mobile-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+
+                <div class="collapse navbar-collapse" id="cfmNavbar">
+                    <ul class="navbar-nav mx-auto cfm-nav-menu align-items-lg-center gap-lg-4">
+                        <li class="nav-item"><a href="servicios.html" class="cfm-nav-link">Services</a></li>
+                        <li class="nav-item"><a href="Inicio.html#galeria" class="cfm-nav-link">Gallery</a></li>
+                        <li class="nav-item"><a href="Inicio.html#informacion" class="cfm-nav-link">Información</a></li>
+                    </ul>
+                    <a href="servicios.html" class="cfm-btn-book ms-lg-3 mt-3 mt-lg-0 d-inline-block">Reservar ahora</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONFIRMATION SECTION -->
+    <main class="cfm-main">
+        <div class="container">
+
+            <div class="cfm-title-section mb-5">
+                <h1 class="cfm-page-title">CONFIRMACIÓN <span class="text-accent">FOCUS</span></h1>
+            </div>
+
+            <div class="row g-5">
+
+                <!-- LEFT COLUMN: FORM -->
+                <div class="col-lg-6 col-12">
+                    <div class="cfm-form-wrapper">
+
+                        <p class="cfm-form-desc mb-5">
+                            Tu lugar está reservado. Prepárate para el cambio. Por favor, completa tus detalles para
+                            finalizar la precisión de tu cita.
+                        </p>
+
+                        <form id="cfm-booking-form" class="d-flex flex-column gap-4">
+                            <div class="cfm-form-group">
+                                <label class="cfm-label" for="cfm-name">NOMBRE Y APELLIDO</label>
+                                <input type="text" id="cfm-name" class="cfm-input" placeholder="Ej: Juan Pérez"
+                                    autocomplete="name" required minlength="3">
+                                <span class="cfm-field-hint">Ingresa tu nombre y tu apellido.</span>
+                                <span class="cfm-field-error d-none" id="cfm-name-error"></span>
+                            </div>
+
+                            <div class="cfm-form-group">
+                                <label class="cfm-label" for="cfm-phone">TELÉFONO (CHILE)</label>
+                                <input type="tel" id="cfm-phone" class="cfm-input" placeholder="569 1234 5678"
+                                    inputmode="numeric" autocomplete="tel" required maxlength="15">
+                                <span class="cfm-field-hint">Debe comenzar con 569 y tener 8 dígitos más (móvil Chile).</span>
+                                <span class="cfm-field-error d-none" id="cfm-phone-error"></span>
+                            </div>
+
+                            <button type="submit" class="cfm-btn-submit mt-3">
+                                CONFIRMAR RESERVA
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: SUMMARY & PHOTO -->
+                <div class="col-lg-6 col-12">
+                    <div class="cfm-summary-wrapper d-flex flex-column gap-5">
+
+                        <!-- SERVICE SUMMARY CARD -->
+                        <div class="cfm-summary-card">
+                            <h3 class="cfm-summary-title">RESUMEN DEL SERVICIO</h3>
+
+                            <div class="cfm-summary-list">
+                                <div class="cfm-summary-item d-flex justify-content-between align-items-center">
+                                    <span class="cfm-item-label">BARBERO</span>
+                                    <span class="cfm-item-value" id="cfm-summary-barber">BYRON ESCALONA</span>
+                                </div>
+                                <div class="cfm-summary-item d-flex justify-content-between align-items-center">
+                                    <span class="cfm-item-label">FECHA</span>
+                                    <span class="cfm-item-value" id="cfm-summary-date">24 OCT, 2024</span>
+                                </div>
+                                <div class="cfm-summary-item d-flex justify-content-between align-items-center">
+                                    <span class="cfm-item-label">HORA</span>
+                                    <span class="cfm-item-value" id="cfm-summary-time">14:30 PM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ATMOSPHERE PHOTO CARD -->
+                        <div class="cfm-photo-card">
+                            <div class="cfm-photo-container">
+                                <img src="img/atmosphere.jpg" alt="Atmósfera de precisión"
+                                    class="cfm-photo-img img-fluid"
+                                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800';">
+                            </div>
+                            <div class="cfm-photo-caption mt-3">
+                                <span class="cfm-caption-bullet"></span>
+                                <h4 class="cfm-caption-title">ATMÓSFERA DE PRECISIÓN</h4>
+                                <p class="cfm-caption-text text-gray">ESTACIÓN DE TRABAJO W-04. ILUMINACIÓN TÉCNICA
+                                    OPTIMIZADA PARA EL DETALLE.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- WATERMARK BACKGROUND TARGET -->
+    <div class="cfm-bg-radar">
+        <svg width="220" height="220" viewBox="0 0 200 200" fill="none" stroke="#e60000" stroke-opacity="0.04"
+            stroke-width="1.5">
+            <circle cx="100" cy="100" r="80"></circle>
+            <circle cx="100" cy="100" r="50"></circle>
+            <circle cx="100" cy="100" r="20"></circle>
+            <line x1="100" y1="10" x2="100" y2="190"></line>
+            <line x1="10" y1="100" x2="190" y2="100"></line>
+        </svg>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="cfm-footer">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="cfm-footer-logo">
+                <span class="cfm-logo-accent">FOCUS</span>
+            </div>
+            <div class="cfm-footer-right d-flex align-items-center gap-4 flex-wrap">
+                <p class="cfm-footer-copy mb-0">© 2024 Focus Barber Studio. Precision Crafted.</p>
+                <div class="cfm-footer-links d-flex gap-3">
+                    <a href="#" class="cfm-footer-link">Privacy Policy</a>
+                    <a href="#" class="cfm-footer-link">Terms of Service</a>
+                    <a href="#" class="cfm-footer-link">Horario: Lun–Vie 12:00–21:00 · Sáb 10:00–20:00</a>
+                </div>
+                <!-- Small web/social indicators -->
+                <div class="cfm-footer-icons d-flex gap-2">
+                    <a href="#" class="cfm-footer-icon" aria-label="Web">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" class="cfm-footer-icon" aria-label="Instagram">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FINAL SUCCESS MODAL -->
+    <div class="modal fade cfm-success-modal" id="finalSuccessModal" tabindex="-1" aria-hidden="true"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center py-5 px-4">
+                <div class="modal-icon mx-auto mb-4">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h3 class="modal-title mb-2">¡Reserva Completada!</h3>
+                <p class="modal-desc text-gray mb-4" id="modal-success-desc-text"></p>
+                <button class="cfm-btn-modal-close mx-auto border-0" id="btn-modal-finish">Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Firebase CDN (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Link a Javascript externo de Confirmación -->
+    <script src="js/confirmacion.js"></script>
+
+</body>
+
+</html>

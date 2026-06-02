@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Focus Barber Studio</title>
+    <meta name="description" content="Corte degradado y corte degradado + barba en Focus Barber Studio. Líneas, cejas y bebestible de cortesía incluidos.">
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="css/servicios.css">
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="srv-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand srv-logo" href="Inicio.html">
+                    <span class="srv-logo-accent">FOCUS</span> BARBER STUDIO
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#srvNavbar" aria-controls="srvNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="srv-hamburger" id="srv-mobile-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+
+                <div class="collapse navbar-collapse" id="srvNavbar">
+                    <ul class="navbar-nav mx-auto srv-nav-menu align-items-lg-center gap-lg-4">
+                        <li class="nav-item"><a href="servicios.html" class="srv-nav-link active">Services</a></li>
+                        <li class="nav-item"><a href="Inicio.html#galeria" class="srv-nav-link">Gallery</a></li>
+                        <li class="nav-item"><a href="Inicio.html#informacion" class="srv-nav-link">Información</a></li>
+                    </ul>
+                    <a href="Inicio.html#informacion" class="srv-btn-book ms-lg-3 mt-3 mt-lg-0 d-inline-block">Reservar ahora</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- PAGE HERO / TITLE SECTION -->
+    <section class="srv-hero">
+        <div class="container">
+            <span class="srv-badge">— Selección de Servicio</span>
+            <h1 class="srv-hero-title">Servicios de Precisión</h1>
+            <p class="srv-hero-desc">Elige tu servicio. Líneas y cejas incluidas en el valor, más bebestible de cortesía.</p>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <main class="srv-main">
+        <div class="container">
+
+            <div class="row g-4 srv-cards-row">
+
+                <!-- SERVICIO 1: CORTE DEGRADADO -->
+                <div class="col-lg-6 col-12">
+                    <div class="srv-card selected" id="corte-degradado" data-price="10000">
+                        <div class="srv-card-top">
+                            <div class="srv-card-icon srv-card-icon-sm">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle>
+                                    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                                    <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                                    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <span class="srv-price ms-auto">$10.000</span>
+                        </div>
+                        <h2 class="srv-card-title srv-card-title-lg mt-3">Corte Degradado</h2>
+                        <p class="srv-card-desc mt-3">
+                            Corte degradado con <span class="text-accent">líneas y cejas incluidas</span> en el valor.
+                            Incluye <span class="text-accent">bebestible de cortesía</span>.
+                        </p>
+                        <div class="srv-tags">
+                            <span class="srv-tag srv-tag-outline">Líneas incluidas</span>
+                            <span class="srv-tag srv-tag-outline">Cejas incluidas</span>
+                            <span class="srv-tag">Bebestible de cortesía</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SERVICIO 2: CORTE DEGRADADO + BARBA -->
+                <div class="col-lg-6 col-12">
+                    <div class="srv-card" id="corte-degradado-barba" data-price="13000">
+                        <div class="srv-card-top">
+                            <div class="srv-card-icon srv-card-icon-sm">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                            <span class="srv-price ms-auto">$13.000</span>
+                        </div>
+                        <h2 class="srv-card-title srv-card-title-lg mt-3">Corte Degradado + Barba</h2>
+                        <p class="srv-card-desc mt-3">
+                            Corte degradado con perfilado de barba. <span class="text-accent">Líneas y cejas incluidas</span> en el valor.
+                            Incluye <span class="text-accent">bebestible de cortesía</span>.
+                        </p>
+                        <div class="srv-tags">
+                            <span class="srv-tag srv-tag-outline">Líneas incluidas</span>
+                            <span class="srv-tag srv-tag-outline">Cejas incluidas</span>
+                            <span class="srv-tag">Bebestible de cortesía</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <div class="srv-bottom-nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Steps Indicator -->
+            <div class="srv-steps d-flex align-items-center gap-3">
+                <div class="srv-step srv-step-active">
+                    <span class="srv-step-num">Paso 01 / 03</span>
+                    <span class="srv-step-label">Servicios</span>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-accent"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <div class="srv-step srv-step-inactive">
+                    <span class="srv-step-num">Paso 02</span>
+                    <span class="srv-step-label">Horario</span>
+                </div>
+            </div>
+
+            <!-- Next Button -->
+            <a href="agenda.html" class="srv-btn-next">
+                Siguiente: Elegir Horario
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="srv-footer">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="srv-footer-logo">
+                <span class="srv-logo-accent">FOCUS</span>
+            </div>
+            <div class="srv-footer-right text-end">
+                <p class="srv-footer-copy mb-1">© 2024 Focus Barber Studio. Precision Crafted.</p>
+                <div class="srv-footer-links d-flex justify-content-end gap-3">
+                    <a href="#" class="srv-footer-link">Privacy Policy</a>
+                    <a href="#" class="srv-footer-link">Horario: Lun–Vie 12:00–21:00 · Sáb 10:00–20:00</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Link a Javascript externo de Servicios -->
+    <script src="js/servicios.js"></script>
+
+</body>
+</html>

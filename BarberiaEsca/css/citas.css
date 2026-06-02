@@ -1,0 +1,489 @@
+/* =====================================================
+   FOCUS BARBER STUDIO - citas.css
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+/* === Variables === */
+:root {
+  --bg-dark: #080808;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --bg-input: #151515;
+  --primary-red: #e60000;
+  --primary-red-hover: #ff2a2a;
+  --primary-red-glow: rgba(230, 0, 0, 0.25);
+  --text-white: #ffffff;
+  --text-gray: #a5a5a5;
+  --text-muted: #555555;
+  --border-color: #1e1e1e;
+  --font-title: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* === Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.text-accent { color: var(--primary-red) !important; }
+
+/* === SECURITY LOCK SCREEN === */
+.cts-lock-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.cts-lock-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.cts-lock-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(230, 0, 0, 0.08);
+  border: 1px solid var(--border-red);
+  color: var(--primary-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cts-lock-title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 1.35rem;
+}
+
+.cts-lock-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.cts-pin-input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: 12px;
+  padding: 10px 0;
+  width: 100%;
+  font-weight: 900;
+  transition: var(--transition);
+}
+
+.cts-pin-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 15px var(--primary-red-glow);
+}
+
+.cts-pin-btn {
+  background-color: var(--primary-red);
+  color: var(--text-white);
+  border: none;
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 14px 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cts-pin-btn:hover {
+  background-color: var(--primary-red-hover);
+  box-shadow: 0 4px 15px rgba(255, 42, 42, 0.4);
+}
+
+.cts-pin-hint {
+  font-size: 0.72rem;
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+}
+
+.cts-lock-back-link {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+
+.cts-lock-back-link:hover {
+  color: var(--text-white);
+}
+
+/* === MAIN DASHBOARD LAYOUT === */
+.cts-dashboard-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.cts-header {
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(8, 8, 8, 0.95);
+}
+
+.cts-logo {
+  font-family: var(--font-title);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cts-logo-accent {
+  color: var(--primary-red);
+}
+
+.cts-barber-badge {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 8px 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #282828;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cts-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #00ff66;
+  display: inline-block;
+  box-shadow: 0 0 8px #00ff66;
+}
+
+.cts-btn-logout {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-gray);
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cts-btn-logout:hover {
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+  background-color: rgba(230, 0, 0, 0.05);
+}
+
+/* Stats Counter Row */
+.cts-stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  text-align: left;
+  position: relative;
+}
+
+.cts-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #1e1e1e;
+}
+
+.cts-stat-card:hover::after {
+  background-color: var(--primary-red);
+}
+
+.cts-stat-label {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cts-stat-value {
+  font-family: var(--font-title);
+  font-size: 1.85rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+/* Controls Card */
+.cts-controls-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.cts-search-input {
+  width: 100%;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  padding: 12px 18px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 300;
+  transition: var(--transition);
+}
+
+.cts-search-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+}
+
+.cts-select-filter {
+  width: 100%;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  padding: 12px 14px;
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+}
+
+.cts-select-filter:focus {
+  border-color: var(--primary-red);
+}
+
+.cts-btn-seed {
+  background-color: #1e1e1e;
+  border: 1px solid #2d2d2d;
+  color: var(--text-gray);
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 12px 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cts-btn-seed:hover {
+  background-color: rgba(255,255,255,0.03);
+  color: var(--text-white);
+}
+
+/* Appointments Card / Table */
+.cts-appointments-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.cts-card-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cts-card-title {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-white);
+}
+
+.cts-records-badge {
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.cts-table {
+  margin: 0;
+  color: var(--text-white);
+  vertical-align: middle;
+}
+
+.cts-table th {
+  background-color: #161616;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-title);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 18px 24px;
+}
+
+.cts-table td {
+  background-color: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 24px;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.cts-client-name {
+  font-family: var(--font-title);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--text-white);
+}
+
+.cts-client-id {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.cts-service-value {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--primary-red);
+  letter-spacing: 0.5px;
+}
+
+.cts-barber-value {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cts-date-value {
+  font-family: var(--font-title);
+  font-weight: 800;
+  color: var(--text-white);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.cts-time-value {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cts-badge-status {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 6px 12px;
+}
+
+.cts-status-pending {
+  background-color: rgba(255, 193, 7, 0.08);
+  border: 1px solid rgba(255, 193, 7, 0.25);
+  color: #ffc107;
+}
+
+.cts-status-completed {
+  background-color: rgba(40, 167, 69, 0.08);
+  border: 1px solid rgba(40, 167, 69, 0.25);
+  color: #28a745;
+}
+
+/* Action Buttons */
+.cts-btn-action-complete {
+  background-color: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  color: #28a745;
+  font-family: var(--font-title);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cts-btn-action-complete:hover {
+  background-color: #28a745;
+  color: var(--text-white);
+  box-shadow: 0 3px 10px rgba(40,167,69,0.3);
+}
+
+.cts-btn-action-delete {
+  background-color: rgba(230, 0, 0, 0.06);
+  border: 1px solid rgba(230, 0, 0, 0.25);
+  color: var(--primary-red);
+  font-family: var(--font-title);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cts-btn-action-delete:hover {
+  background-color: var(--primary-red);
+  color: var(--text-white);
+  box-shadow: 0 3px 10px var(--primary-red-glow);
+}
+
+/* Footer */
+.cts-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 24px 0;
+  background-color: var(--bg-dark);
+}
+
+.cts-footer-logo {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.cts-footer-logo-accent {
+  color: var(--primary-red);
+}
+
+/* Custom limits */
+.max-w-300 { max-width: 300px; }
