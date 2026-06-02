@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Barber Studio - Precisión y Enfoque</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Link al CSS separado personalizado -->
+    <link rel="stylesheet" href="css/inicio.css">
+</head>
+
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent py-3">
+            <div class="container">
+                <a class="navbar-brand logo d-flex align-items-center gap-2" href="#">
+                    <span class="logo-accent">FOCUS</span><span>BARBER STUDIO</span>
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <div class="menu-toggle" id="mobile-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto nav-menu align-items-lg-center">
+                        <li class="nav-item"><a href="#" class="nav-link active">Inicio</a></li>
+                        <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                        <li class="nav-item"><a href="#nosotros" class="nav-link">Sobre Nosotros</a></li>
+                        <li class="nav-item"><a href="#informacion" class="nav-link">Información</a></li>
+                        <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                            <a href="servicios.html" class="btn-cta d-inline-block">Reservar Cita</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero d-flex align-items-center" id="inicio">
+        <div class="hero-bg-container">
+            <!-- Imagen de fondo que el usuario colocará en img/hero-bg.jpg -->
+            <img src="imagenes/FOCUS.png" alt="Focus Barber Studio background" class="hero-image"
+                onerror="this.style.display='none';">
+        </div>
+
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-8 col-12 text-start">
+                    <span class="badge">Experiencia Inigualable</span>
+                    <h1 class="hero-title display-4">Enfoque en la<br><span
+                            class="text-accent">excelencia.</span><br>Precisión en cada corte.</h1>
+                    <p class="hero-desc lead">Un espacio diseñado para el hombre que valora la disciplina y el detalle.
+                        No solo es un corte, es una declaración de intenciones.</p>
+                    <div class="hero-buttons d-flex flex-wrap gap-3">
+                        <a href="servicios.html" class="btn-cta">Ver Servicios</a>
+                        <a href="#galeria" class="btn-secondary">Galería</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY SECTION -->
+    <section class="section-padding philosophy" id="nosotros">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 col-12">
+                    <div class="philosophy-text">
+                        <span class="badge">Filosofía de marca</span>
+                        <h2 class="philosophy-title mb-4">
+                            <span class="philosophy-title-line">Enfócate en tus metas,</span>
+                            <span class="philosophy-title-line philosophy-title-accent">nosotros en tu estilo</span>
+                        </h2>
+                        <p class="mb-3 text-gray">En FOCUS, creemos que la grandeza se forja en la repetición y la
+                            atención obsesiva al detalle. Tú traes la meta; nosotros la reflejamos en cada corte con
+                            precisión y disciplina.</p>
+                        <p class="mb-4 text-gray">Entendemos el cabello como una estructura técnica que requiere
+                            herramientas de alta precisión y un ojo entrenado para la simetría perfecta.</p>
+
+                        <div class="philosophy-stats d-flex gap-5 mt-4">
+                            <div class="stat-item">
+                                <span class="stat-number">5+</span>
+                                <span class="stat-label">Años Exp</span>
+                            </div>
+                            <div class="stat-item">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <div class="philosophy-image-wrapper">
+                        <!-- Imagen que el usuario colocará en img/philosophy.jpg -->
+                        <img src="img/philosophy.jpg" alt="Barber tools and precision work" class="philosophy-img w-100"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800';">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="section-padding gallery" id="galeria">
+        <div class="container">
+            <div class="gallery-header d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3">
+                <div>
+                    <span class="badge">Portfolio</span>
+                    <h2 class="gallery-title m-0">Galería de trabajos</h2>
+                </div>
+            </div>
+
+            <!-- Grid Layout utilizando filas de Bootstrap y columnas responsivas -->
+            <div class="row g-4 mb-4">
+                <!-- Columna Izquierda: Imagen Grande -->
+                <div class="col-lg-7 col-12">
+                    <div class="gallery-item large-bootstrap-height h-100">
+                        <!-- Imagen que el usuario colocará en img/gallery-1.jpg -->
+                        <img src="img/gallery-1.jpg" alt="Model haircut" class="w-100 h-100 object-fit-cover"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=800';">
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Dos imágenes pequeñas apiladas -->
+                <div class="col-lg-5 col-12">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="gallery-item small-bootstrap-height">
+                                <!-- Imagen que el usuario colocará en img/gallery-2.jpg -->
+                                <img src="img/gallery-2.jpg" alt="Barber Scissors" class="w-100 h-100 object-fit-cover"
+                                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1593702295094-aec22597af65?auto=format&fit=crop&q=80&w=800';">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="gallery-item small-bootstrap-height">
+                                <!-- Imagen que el usuario colocará en img/gallery-3.jpg -->
+                                <img src="img/gallery-3.jpg" alt="Barber Studio Mirror"
+                                    class="w-100 h-100 object-fit-cover"
+                                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner de precisión extrema -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="gallery-banner">
+                        <!-- Imagen que el usuario colocará en img/gallery-banner.jpg -->
+                        <img src="img/gallery-banner.jpg" alt="Precision trimming" class="w-100 h-100 object-fit-cover"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1200';">
+                        <div class="gallery-banner-content text-center py-5 px-3">
+                            <div class="gallery-banner-tag text-accent">+</div>
+                            <h3 class="mb-4">PRECISIÓN EXTREMA</h3>
+                            <a href="servicios.html" class="btn-cta">Reservar Ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & LOCATION SECTION -->
+    <section class="section-padding contact" id="informacion">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Columna de información y horarios -->
+                <div class="col-lg-6 col-12">
+                    <span class="badge">Ubicaciones</span>
+                    <h2 class="contact-title mb-5">Ubicación & Horarios</h2>
+
+                    <div class="contact-info-list mb-5">
+                        <div class="info-item d-flex gap-3 mb-4">
+                            <div class="info-icon text-accent">
+                                <!-- Pin Icon -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="info-details">
+                                <h4 class="m-0 mb-1">Ubicacion de Barberia  </h4>
+                                <p class="m-0 text-gray">Santa mercedes Tres 14789,<br>SanBernardo</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item d-flex gap-3 mb-4">
+                            <div class="info-icon text-accent">
+                                <!-- Clock Icon -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="info-details">
+                                <h4 class="m-0 mb-1">HORAS DE OPERACIÓN</h4>
+                                <p class="m-0 text-gray">LUNES – VIERNES: 12:00 – 21:00<br>SÁBADO: 10:00 – 20:00<br>DOMINGOS: CERRADO</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item d-flex gap-3 mb-4">
+                            <div class="info-icon text-accent">
+                                <!-- Phone Icon -->
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="info-details">
+                                <h4 class="m-0 mb-1">INFORMACIÓN DIRECTA</h4>
+                                <p class="m-0 text-gray">+56957440623<br></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <!-- Columna del mapa -->
+                <div class="col-lg-6 col-12">
+                    <div class="map-wrapper h-100">
+                        <iframe
+                            class="map-embed"
+                            title="Ubicación Focus Barber Studio — Santa Mercedes Tres 14789, San Bernardo"
+                            src="https://maps.google.com/maps?q=Santa+Mercedes+Tres+14789,+San+Bernardo,+Chile&hl=es&z=17&ie=UTF8&iwloc=&output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen></iframe>
+                        <a class="map-open-link"
+                            href="https://www.google.com/maps/search/?api=1&query=Santa+Mercedes+Tres+14789,+San+Bernardo,+Chile"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            Abrir ubicación exacta en Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row align-items-center g-4 pb-4 border-bottom border-secondary">
+                <div class="col-md-4 text-center text-md-start">
+                    <div class="footer-logo fs-4">
+                        <span class="text-accent">FOCUS</span> BARBER STUDIO
+                        <span class="footer-logo-sub text-muted">Est. 2026. Precision cuts.</span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="footer-links d-flex justify-content-center gap-4">
+                        <a href="#" class="footer-link">Privacidad</a>
+                        <a href="#" class="footer-link">Términos</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <div class="footer-info text-muted">
+                        LUN–VIE 12:00–21:00 · SÁB 10:00–20:00
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-4 text-muted small align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    &copy; 2026 Focus Barber Studio. Todos los derechos reservados.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    Diseño y Enfoque Extremo
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING CALENDAR BUTTON -->
+    <div class="fab-calendar" id="fab-calendar"
+        onclick="document.getElementById('informacion').scrollIntoView({behavior: 'smooth'})">
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"></rect>
+            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></line>
+            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></line>
+            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></line>
+        </svg>
+    </div>
+
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Link a Javascript externo de Inicio -->
+    <script src="js/inicio.js"></script>
+</body>
+
+</html>
