@@ -2,9 +2,18 @@
 //  confirmacion.js — Guarda citas en Firestore (Firebase)
 // ============================================================
 
-// CONFIGURACIÓN DE NOTIFICACIONES AUTOMÁTICAS DE WHATSAPP (CallMeBot)
-// Reemplaza "TU_API_KEY_AQUI" con el código que te dé CallMeBot
-const CALLMEBOT_API_KEY = "TU_API_KEY_AQUI";
+// CONFIGURACIÓN DE EMAILJS PARA NOTIFICACIONES POR CORREO
+// Regístrate gratis en emailjs.com, crea tu servicio y plantilla, y copia los IDs aquí:
+const EMAILJS_PUBLIC_KEY = "TU_PUBLIC_KEY_AQUI";
+const EMAILJS_SERVICE_ID = "TU_SERVICE_ID_AQUI";
+const EMAILJS_TEMPLATE_ID = "TU_TEMPLATE_ID_AQUI";
+
+// Inicializar EmailJS
+if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "TU_PUBLIC_KEY_AQUI") {
+    emailjs.init({
+        publicKey: EMAILJS_PUBLIC_KEY,
+    });
+}
 
 // Mobile navbar hamburger toggle
 const cfmToggler = document.querySelector('.navbar-toggler');
@@ -184,34 +193,32 @@ if (bookingForm) {
                 btnWsp.href = urlWhatsapp;
             }
 
-            // Enviar notificación automática silenciosa al barbero usando CallMeBot si configuró su API key
-            if (typeof CALLMEBOT_API_KEY !== 'undefined' && CALLMEBOT_API_KEY && CALLMEBOT_API_KEY !== "TU_API_KEY_AQUI") {
-                const textoPlano = `Hola! Acabo de agendar una cita en Focus Barber Studio:\n\n` +
-                                   `• Cliente: ${name}\n` +
-                                   `• Servicio: ${serviceName}\n` +
-                                   `• Fecha: ${dateStr}\n` +
-                                   `• Hora: ${timeStr}\n` +
-                                   `• Teléfono: ${phone}\n\n` +
-                                   `Por favor confirmar. ¡Gracias!`;
-                
-                const callmebotUrl = `https://api.callmebot.com/whatsapp.php?phone=${telefonoBarberia}&text=${encodeURIComponent(textoPlano)}&apikey=${CALLMEBOT_API_KEY}`;
-                
-                fetch(callmebotUrl)
-                    .then(response => console.log('Mensaje automático enviado con éxito.'))
-                    .catch(err => console.error('Error al enviar mensaje automático de CallMeBot:', err));
+            // Enviar notificación automática por correo usando EmailJS
+            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "TU_PUBLIC_KEY_AQUI") {
+                const templateParams = {
+                    to_email: "benjamin.moya11@gmail.com",
+                    client_name: name,
+                    client_phone: phone,
+                    service: serviceName,
+                    date: dateStr,
+                    time: timeStr,
+                    barber: barberName,
+                    appointment_id: appointment.id
+                };
+
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                    .then(response => {
+                        console.log('Correo de confirmación enviado con éxito!', response.status, response.text);
+                    })
+                    .catch(err => {
+                        console.error('Error al enviar correo de confirmación:', err);
+                    });
             }
 
             // Actualizar modal con los detalles del cliente
             const modalText = document.getElementById('modal-success-desc-text');
             if (modalText) {
                 modalText.innerHTML = `Gracias <strong class="text-white">${name}</strong>.<br>Tu cita para <strong class="text-white">${serviceName}</strong> ha sido agendada con disciplina el <strong class="text-accent">${dateStr}</strong> a las <strong class="text-accent">${timeStr}</strong>.`;
-            }
-
-            // Intentar abrir WhatsApp en pestaña nueva automáticamente
-            try {
-                window.open(urlWhatsapp, '_blank');
-            } catch (popError) {
-                console.log("Popup bloqueado por el navegador, se usará el botón del modal.");
             }
 
             // Mostrar modal de éxito
