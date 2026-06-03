@@ -177,21 +177,7 @@ if (bookingForm) {
             // Guardar en Firestore — colección "appointments"
             await db.collection('citas').add(appointment);
 
-            // Generar enlace de WhatsApp para enviar comprobante a la barbería
-            const telefonoBarberia = "56972822349";
-            const textoMensaje = `Hola! Acabo de agendar una cita en Focus Barber Studio:%0A%0A` +
-                                 `• *Cliente:* ${name}%0A` +
-                                 `• *Servicio:* ${serviceName}%0A` +
-                                 `• *Fecha:* ${dateStr}%0A` +
-                                 `• *Hora:* ${timeStr}%0A` +
-                                 `• *Teléfono:* ${phone}%0A%0A` +
-                                 `Por favor confirmar. ¡Gracias!`;
-            
-            const urlWhatsapp = `https://wa.me/${telefonoBarberia}?text=${textoMensaje}`;
-            const btnWsp = document.getElementById('btn-whatsapp-send');
-            if (btnWsp) {
-                btnWsp.href = urlWhatsapp;
-            }
+
 
             // Enviar notificación automática por correo usando EmailJS
             if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "TU_PUBLIC_KEY_AQUI") {
@@ -247,7 +233,7 @@ document.getElementById('btn-modal-finish')?.addEventListener('click', () => {
     localStorage.removeItem('selected_service_price');
 
     // Redirigir al inicio
-    window.location.href = 'Inicio.html';
+    window.location.href = 'index.html';
 });
 
 // Init
