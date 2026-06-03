@@ -68,7 +68,7 @@ function updateScheduleSections(scheduleType) {
         afternoonHours.textContent = '/ 15:00 - 18:00';
     }
     if (eveningHours) {
-        eveningHours.textContent = scheduleType === 'saturday' ? '/ 19:00 - 20:00' : '/ 19:00 - 20:00';
+        eveningHours.textContent = scheduleType === 'saturday' ? '/ 18:45 - 20:00' : '/ 18:45 - 21:00';
     }
 }
 
@@ -86,6 +86,29 @@ async function loadAppointmentsFromFirestore() {
     }
 }
 
+function isMonthAllowed(year, month) {
+    const today = new Date();
+    const todayYear = today.getFullYear();
+    const todayMonth = today.getMonth();
+    
+    // Diferencia en meses entre la fecha objetivo y hoy
+    const monthDiff = (year - todayYear) * 12 + (month - todayMonth);
+    
+    // No permitir meses pasados
+    if (monthDiff < 0) return false;
+    
+    // El mes actual siempre está permitido
+    if (monthDiff === 0) return true;
+    
+    // El mes siguiente está permitido SOLO si el día de hoy es >= 15
+    if (monthDiff === 1) {
+        return today.getDate() >= 15;
+    }
+    
+    // Más allá del mes siguiente no está permitido
+    return false;
+}
+
 function renderCalendar(date) {
     const daysContainer = document.getElementById('calendar-days');
     const monthYearTitle = document.getElementById('calendar-month-year');
@@ -98,6 +121,36 @@ function renderCalendar(date) {
     const month = date.getMonth();
 
     monthYearTitle.textContent = `${monthNames[month]} ${year}`;
+
+    // Habilitar/deshabilitar botones de navegación de mes
+    const prevBtn = document.getElementById('prev-month');
+    const nextBtn = document.getElementById('next-month');
+
+    if (prevBtn) {
+        const prevMonthDate = new Date(year, month - 1, 1);
+        if (isMonthAllowed(prevMonthDate.getFullYear(), prevMonthDate.getMonth())) {
+            prevBtn.removeAttribute('disabled');
+            prevBtn.style.opacity = '1';
+            prevBtn.style.pointerEvents = 'auto';
+        } else {
+            prevBtn.setAttribute('disabled', 'true');
+            prevBtn.style.opacity = '0.3';
+            prevBtn.style.pointerEvents = 'none';
+        }
+    }
+
+    if (nextBtn) {
+        const nextMonthDate = new Date(year, month + 1, 1);
+        if (isMonthAllowed(nextMonthDate.getFullYear(), nextMonthDate.getMonth())) {
+            nextBtn.removeAttribute('disabled');
+            nextBtn.style.opacity = '1';
+            nextBtn.style.pointerEvents = 'auto';
+        } else {
+            nextBtn.setAttribute('disabled', 'true');
+            nextBtn.style.opacity = '0.3';
+            nextBtn.style.pointerEvents = 'none';
+        }
+    }
 
     const firstDayIndex = new Date(year, month, 1).getDay();
     const lastDay = new Date(year, month + 1, 0).getDate();
@@ -176,13 +229,27 @@ function renderCalendar(date) {
 
 // Navigation entre meses
 document.getElementById('prev-month')?.addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar(currentDate);
+    const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    if (isMonthAllowed(targetDate.getFullYear(), targetDate.getMonth())) {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        selectedDay = null;
+        selectedTime = null;
+        renderCalendar(currentDate);
+        initTimeSlots();
+        updateSummary();
+    }
 });
 
 document.getElementById('next-month')?.addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar(currentDate);
+    const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+    if (isMonthAllowed(targetDate.getFullYear(), targetDate.getMonth())) {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        selectedDay = null;
+        selectedTime = null;
+        renderCalendar(currentDate);
+        initTimeSlots();
+        updateSummary();
+    }
 });
 
 // TIME SLOTS LOGIC — usa caché de Firestore
