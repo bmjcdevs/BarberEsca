@@ -2,6 +2,10 @@
 //  confirmacion.js — Guarda citas en Firestore (Firebase)
 // ============================================================
 
+// CONFIGURACIÓN DE NOTIFICACIONES AUTOMÁTICAS DE WHATSAPP (CallMeBot)
+// Reemplaza "TU_API_KEY_AQUI" con el código que te dé CallMeBot
+const CALLMEBOT_API_KEY = "TU_API_KEY_AQUI";
+
 // Mobile navbar hamburger toggle
 const cfmToggler = document.querySelector('.navbar-toggler');
 const cfmHamburger = document.getElementById('cfm-mobile-menu');
@@ -165,7 +169,7 @@ if (bookingForm) {
             await db.collection('citas').add(appointment);
 
             // Generar enlace de WhatsApp para enviar comprobante a la barbería
-            const telefonoBarberia = "56978822349";
+            const telefonoBarberia = "56972822349";
             const textoMensaje = `Hola! Acabo de agendar una cita en Focus Barber Studio:%0A%0A` +
                                  `• *Cliente:* ${name}%0A` +
                                  `• *Servicio:* ${serviceName}%0A` +
@@ -178,6 +182,23 @@ if (bookingForm) {
             const btnWsp = document.getElementById('btn-whatsapp-send');
             if (btnWsp) {
                 btnWsp.href = urlWhatsapp;
+            }
+
+            // Enviar notificación automática silenciosa al barbero usando CallMeBot si configuró su API key
+            if (typeof CALLMEBOT_API_KEY !== 'undefined' && CALLMEBOT_API_KEY && CALLMEBOT_API_KEY !== "TU_API_KEY_AQUI") {
+                const textoPlano = `Hola! Acabo de agendar una cita en Focus Barber Studio:\n\n` +
+                                   `• Cliente: ${name}\n` +
+                                   `• Servicio: ${serviceName}\n` +
+                                   `• Fecha: ${dateStr}\n` +
+                                   `• Hora: ${timeStr}\n` +
+                                   `• Teléfono: ${phone}\n\n` +
+                                   `Por favor confirmar. ¡Gracias!`;
+                
+                const callmebotUrl = `https://api.callmebot.com/whatsapp.php?phone=${telefonoBarberia}&text=${encodeURIComponent(textoPlano)}&apikey=${CALLMEBOT_API_KEY}`;
+                
+                fetch(callmebotUrl)
+                    .then(response => console.log('Mensaje automático enviado con éxito.'))
+                    .catch(err => console.error('Error al enviar mensaje automático de CallMeBot:', err));
             }
 
             // Actualizar modal con los detalles del cliente
