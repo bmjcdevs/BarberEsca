@@ -27,3 +27,18 @@ if (navLinks && navbarCollapse) {
         });
     });
 }
+    // Galería: abrir imagen completa en modal al hacer clic
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryModalImage = document.getElementById('galleryModalImage');
+    const galleryImages = document.querySelectorAll('.gallery .gallery-item img');
+
+    if (galleryModal && galleryModalImage && galleryImages.length > 0) {
+        galleryImages.forEach(image => {
+            image.addEventListener('click', () => {
+                galleryModalImage.src = image.src;
+                galleryModalImage.alt = image.alt || 'Corte completo';
+                const bsGalleryModal = new bootstrap.Modal(galleryModal);
+                bsGalleryModal.show();
+            });
+        });
+    }
