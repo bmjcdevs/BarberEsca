@@ -164,10 +164,33 @@ if (bookingForm) {
             // Guardar en Firestore — colección "appointments"
             await db.collection('citas').add(appointment);
 
+            // Generar enlace de WhatsApp para enviar comprobante a la barbería
+            const telefonoBarberia = "56978822349";
+            const textoMensaje = `Hola! Acabo de agendar una cita en Focus Barber Studio:%0A%0A` +
+                                 `• *Cliente:* ${name}%0A` +
+                                 `• *Servicio:* ${serviceName}%0A` +
+                                 `• *Fecha:* ${dateStr}%0A` +
+                                 `• *Hora:* ${timeStr}%0A` +
+                                 `• *Teléfono:* ${phone}%0A%0A` +
+                                 `Por favor confirmar. ¡Gracias!`;
+            
+            const urlWhatsapp = `https://wa.me/${telefonoBarberia}?text=${textoMensaje}`;
+            const btnWsp = document.getElementById('btn-whatsapp-send');
+            if (btnWsp) {
+                btnWsp.href = urlWhatsapp;
+            }
+
             // Actualizar modal con los detalles del cliente
             const modalText = document.getElementById('modal-success-desc-text');
             if (modalText) {
                 modalText.innerHTML = `Gracias <strong class="text-white">${name}</strong>.<br>Tu cita para <strong class="text-white">${serviceName}</strong> ha sido agendada con disciplina el <strong class="text-accent">${dateStr}</strong> a las <strong class="text-accent">${timeStr}</strong>.`;
+            }
+
+            // Intentar abrir WhatsApp en pestaña nueva automáticamente
+            try {
+                window.open(urlWhatsapp, '_blank');
+            } catch (popError) {
+                console.log("Popup bloqueado por el navegador, se usará el botón del modal.");
             }
 
             // Mostrar modal de éxito
@@ -196,7 +219,7 @@ document.getElementById('btn-modal-finish')?.addEventListener('click', () => {
     localStorage.removeItem('selected_service_price');
 
     // Redirigir al inicio
-    window.location.href = 'index.html';
+    window.location.href = 'Inicio.html';
 });
 
 // Init

@@ -529,6 +529,31 @@ body {
   box-shadow: 0 4px 15px rgba(255, 42, 42, 0.4);
 }
 
+.cfm-btn-modal-wsp {
+  background-color: #25d366;
+  color: var(--text-white) !important;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  text-decoration: none;
+  border-radius: 0;
+  margin-bottom: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.cfm-btn-modal-wsp:hover {
+  background-color: #20ba5a;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+}
+
 /* =====================================================
    RESPONSIVE MODIFIERS
    ===================================================== */
