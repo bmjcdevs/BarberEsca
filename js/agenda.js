@@ -62,13 +62,13 @@ function updateScheduleSections(scheduleType) {
         satMorning.style.display = scheduleType === 'saturday' ? '' : 'none';
     }
     if (middayHours) {
-        middayHours.textContent = scheduleType === 'saturday' ? '/ 12:00 - 14:00' : '/ 12:00 - 14:00';
+        middayHours.textContent = '/ 12:00 - 15:00';
     }
     if (afternoonHours) {
         afternoonHours.textContent = '/ 15:00 - 18:00';
     }
     if (eveningHours) {
-        eveningHours.textContent = scheduleType === 'saturday' ? '/ 18:45 - 20:00' : '/ 18:45 - 21:00';
+        eveningHours.textContent = scheduleType === 'saturday' ? '/ 19:00 - 21:00' : '/ 19:00 - 22:00';
     }
 }
 
