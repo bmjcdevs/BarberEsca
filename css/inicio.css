@@ -449,6 +449,7 @@ p {
 .gallery-item img {
   transition: var(--transition-smooth);
   filter: none;
+  cursor: zoom-in;
 }
 
 .gallery-item::after {
