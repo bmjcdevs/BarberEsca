@@ -276,6 +276,13 @@ function initTimeSlots() {
             .map(app => app.time)
         : [];
 
+    // Validar si el día seleccionado es el día de hoy
+    const today = new Date();
+    const isSelectedDayToday = selectedDay !== null &&
+                               year === today.getFullYear() &&
+                               month === today.getMonth() &&
+                               selectedDay === today.getDate();
+
     timeButtons.forEach(btn => {
         const btnTime = btn.getAttribute('data-time');
         const btnSchedule = btn.getAttribute('data-schedule') || 'both';
@@ -283,8 +290,19 @@ function initTimeSlots() {
         btn.classList.remove('disabled');
         btn.removeAttribute('disabled');
 
+        // Verificar si la hora del botón ya pasó hoy
+        let isPastTime = false;
+        if (isSelectedDayToday) {
+            const [btnHour, btnMin] = btnTime.split(':').map(Number);
+            const currentHour = today.getHours();
+            const currentMin = today.getMinutes();
+            if (btnHour < currentHour || (btnHour === currentHour && btnMin <= currentMin)) {
+                isPastTime = true;
+            }
+        }
+
         const outsideHours = selectedDay === null || !isSlotAllowedForSchedule(btnSchedule, scheduleType);
-        if (outsideHours || bookedTimesForDate.includes(btnTime)) {
+        if (outsideHours || bookedTimesForDate.includes(btnTime) || isPastTime) {
             btn.classList.add('disabled');
             btn.setAttribute('disabled', 'true');
             if (selectedTime === btnTime) {
