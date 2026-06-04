@@ -204,7 +204,7 @@ if (bookingForm) {
             // Actualizar modal con los detalles del cliente
             const modalText = document.getElementById('modal-success-desc-text');
             if (modalText) {
-                modalText.innerHTML = `Gracias <strong class="text-white">${name}</strong>.<br>Tu cita para <strong class="text-white">${serviceName}</strong> ha sido agendada con disciplina el <strong class="text-accent">${dateStr}</strong> a las <strong class="text-accent">${timeStr}</strong>.`;
+                modalText.innerHTML = `Gracias <strong class="text-white">${name}</strong>.<br>Tu cita para <strong class="text-white">${serviceName}</strong> ha sido agendada con éxito el <strong class="text-accent">${dateStr}</strong> a las <strong class="text-accent">${timeStr}</strong>.`;
             }
 
             // Mostrar modal de éxito

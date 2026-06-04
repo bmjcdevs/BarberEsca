@@ -68,7 +68,7 @@ function updateScheduleSections(scheduleType) {
         afternoonHours.textContent = '/ 15:00 - 18:00';
     }
     if (eveningHours) {
-        eveningHours.textContent = scheduleType === 'saturday' ? '/ 19:00 - 21:00' : '/ 19:00 - 22:00';
+        eveningHours.textContent = scheduleType === 'saturday' ? '/ 19:00 - 20:00' : '/ 19:00 - 21:00';
     }
 }
 
