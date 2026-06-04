@@ -65,6 +65,48 @@ function formatCOP(amount) {
     return '$' + amount.toLocaleString('es-CO');
 }
 
+// Función para convertir fecha y hora del formato del frontend a un objeto Date para ordenar
+function parseAppointmentDateTime(dateStr, timeStr) {
+    if (!dateStr) return new Date(0);
+
+    const cleanedDate = dateStr.replace(',', '');
+    const parts = cleanedDate.split(' ').filter(Boolean); // e.g. ["4", "JUN", "2026"]
+    
+    if (parts.length < 3) return new Date(0);
+
+    const day = parseInt(parts[0], 10);
+    const monthAbbr = parts[1].toUpperCase();
+    const year = parseInt(parts[2], 10);
+
+    const spanishMonths = {
+        "ENE": 0, "FEB": 1, "MAR": 2, "ABR": 3, "MAY": 4, "JUN": 5,
+        "JUL": 6, "AGO": 7, "SEP": 8, "OCT": 9, "NOV": 10, "DIC": 11
+    };
+
+    const month = spanishMonths[monthAbbr] !== undefined ? spanishMonths[monthAbbr] : 0;
+
+    let hours = 0;
+    let minutes = 0;
+
+    if (timeStr) {
+        const timeClean = timeStr.trim().toUpperCase();
+        const isPM = timeClean.includes('PM');
+        const isAM = timeClean.includes('AM');
+        const justTime = timeClean.replace('AM', '').replace('PM', '').trim();
+        const timeParts = justTime.split(':').map(Number);
+        
+        if (timeParts.length >= 2) {
+            hours = timeParts[0];
+            minutes = timeParts[1];
+            
+            if (isPM && hours < 12) hours += 12;
+            if (isAM && hours === 12) hours = 0;
+        }
+    }
+
+    return new Date(year, month, day, hours, minutes);
+}
+
 // CARGAR DATOS CON LISTENER EN TIEMPO REAL (onSnapshot)
 function loadDashboardData() {
     // Si ya hay un listener activo, cancelarlo antes de crear uno nuevo
@@ -80,6 +122,23 @@ function loadDashboardData() {
                 docId: doc.id, // ID de Firestore (necesario para editar/borrar)
                 ...doc.data()
             }));
+
+            // Ordenar citas: PENDIENTES primero (orden cronológico ascendente, más cercanas primero),
+            // luego COMPLETADAS (orden cronológico descendente, completadas recientemente primero).
+            appointments.sort((a, b) => {
+                if (a.status === 'PENDIENTE' && b.status !== 'PENDIENTE') return -1;
+                if (a.status !== 'PENDIENTE' && b.status === 'PENDIENTE') return 1;
+
+                const dateA = parseAppointmentDateTime(a.date, a.time);
+                const dateB = parseAppointmentDateTime(b.date, b.time);
+
+                if (a.status === 'PENDIENTE') {
+                    return dateA - dateB; // Más cercano primero
+                } else {
+                    return dateB - dateA; // Más reciente primero
+                }
+            });
+
             renderAppointmentsTable(appointments);
             updateStats(appointments);
         }, (error) => {
