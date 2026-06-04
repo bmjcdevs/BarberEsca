@@ -174,6 +174,24 @@ if (bookingForm) {
         }
 
         try {
+            // Verificar si el horario ya está reservado por otra persona
+            const querySnapshot = await db.collection('citas')
+                .where('date', '==', dateStr)
+                .where('time', '==', timeStr)
+                .get();
+
+            const activeAppointments = querySnapshot.docs.filter(doc => doc.data().status !== 'CANCELADA');
+
+            if (activeAppointments.length > 0) {
+                alert('Lo sentimos, este horario acaba de ser reservado por otro cliente. Por favor, selecciona otro horario.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'CONFIRMAR RESERVA';
+                }
+                window.location.href = 'agenda.html';
+                return;
+            }
+
             // Guardar en Firestore — colección "appointments"
             await db.collection('citas').add(appointment);
 
