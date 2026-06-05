@@ -206,6 +206,8 @@ function renderAppointmentsTable(appointments) {
         `;
         tbody.appendChild(tr);
     });
+
+    applyFilters();
 }
 
 // UPDATE METRIC CARDS
@@ -277,18 +279,63 @@ document.getElementById('status-filter')?.addEventListener('change', () => {
     applyFilters();
 });
 
+document.getElementById('date-filter')?.addEventListener('input', () => {
+    applyFilters();
+});
+
+document.getElementById('btn-clear-date')?.addEventListener('click', () => {
+    const dateInput = document.getElementById('date-filter');
+    if (dateInput) {
+        dateInput.value = '';
+        applyFilters();
+    }
+});
+
 function applyFilters() {
     const query = document.getElementById('search-input')?.value.toLowerCase() || '';
     const status = document.getElementById('status-filter')?.value || 'TODAS';
+    const dateFilterVal = document.getElementById('date-filter')?.value || '';
+
+    let formattedFilterDate = '';
+    if (dateFilterVal) {
+        formattedFilterDate = formatDateToDbString(dateFilterVal).toUpperCase();
+    }
 
     const rows = document.querySelectorAll('#appointments-tbody tr');
+    let visibleCount = 0;
+
     rows.forEach(row => {
         const text = row.textContent.toLowerCase();
+        const rowDateElement = row.querySelector('.cts-date-value');
+        const rowDate = rowDateElement ? rowDateElement.textContent.trim().toUpperCase() : '';
+
         const hasStatus = status === 'TODAS' || row.textContent.includes(status);
         const hasQuery = text.includes(query);
+        const hasDate = !formattedFilterDate || rowDate === formattedFilterDate;
 
-        row.style.display = hasStatus && hasQuery ? '' : 'none';
+        if (hasStatus && hasQuery && hasDate) {
+            row.style.display = '';
+            visibleCount++;
+        } else {
+            row.style.display = 'none';
+        }
     });
+
+    // Actualizar contador y alerta de no registros
+    const counterBadge = document.getElementById('records-counter-badge');
+    const noRecords = document.getElementById('no-records-alert');
+
+    if (counterBadge) {
+        counterBadge.textContent = `${visibleCount} ${visibleCount === 1 ? 'Registro' : 'Registros'}`;
+    }
+
+    if (noRecords) {
+        if (visibleCount === 0) {
+            noRecords.classList.remove('d-none');
+        } else {
+            noRecords.classList.add('d-none');
+        }
+    }
 }
 
 // BOTÓN DATOS DE SIMULACIÓN (para pruebas)

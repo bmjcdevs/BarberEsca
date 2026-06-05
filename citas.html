@@ -99,12 +99,18 @@
                         <!-- CONTROLS ROW: SEARCH & FILTER -->
                         <div class="cts-controls-card p-4 mb-4">
                             <div class="row g-3 align-items-center">
-                                <div class="col-lg-8 col-md-8 col-12">
+                                <div class="col-lg-5 col-md-5 col-12">
                                     <div class="cts-search-group">
                                         <input type="text" id="search-input" class="cts-search-input" placeholder="Buscar por cliente, teléfono o servicio...">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="date" id="date-filter" class="cts-search-input" style="color-scheme: dark;">
+                                        <button id="btn-clear-date" class="cts-btn-logout" style="padding: 10px 14px; font-size: 0.72rem; white-space: nowrap; height: 100%;" title="Limpiar fecha">Limpiar</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <select id="status-filter" class="cts-select-filter">
                                         <option value="TODAS">TODOS LOS ESTADOS</option>
                                         <option value="PENDIENTE">PENDIENTES</option>

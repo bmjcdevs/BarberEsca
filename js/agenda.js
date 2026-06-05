@@ -194,26 +194,15 @@ function renderCalendar(date) {
         } else {
             if (i === selectedDay) {
                 dayBtn.classList.add('selected');
-                const badgeSpan = document.createElement('span');
-                badgeSpan.classList.add('agd-day-selected-badge');
-                badgeSpan.textContent = 'SELECTED';
-                dayBtn.appendChild(badgeSpan);
             }
 
             dayBtn.addEventListener('click', () => {
                 document.querySelectorAll('.agd-day').forEach(d => {
                     d.classList.remove('selected');
-                    const badge = d.querySelector('.agd-day-selected-badge');
-                    if (badge) badge.remove();
                 });
 
                 dayBtn.classList.add('selected');
                 selectedDay = i;
-
-                const badgeSpan = document.createElement('span');
-                badgeSpan.classList.add('agd-day-selected-badge');
-                badgeSpan.textContent = 'SELECTED';
-                dayBtn.appendChild(badgeSpan);
 
                 updateSummary();
                 initTimeSlots(); // Actualizar horarios bloqueados para el día seleccionado
