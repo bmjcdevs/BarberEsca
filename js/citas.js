@@ -23,6 +23,10 @@ function showLockScreen() {
         window._citasUnsubscribe();
         window._citasUnsubscribe = null;
     }
+    if (window._sobrecuposUnsubscribe) {
+        window._sobrecuposUnsubscribe();
+        window._sobrecuposUnsubscribe = null;
+    }
 }
 
 function showDashboard() {
@@ -113,6 +117,8 @@ function loadDashboardData() {
     if (window._citasUnsubscribe) {
         window._citasUnsubscribe();
     }
+
+    loadSobrecuposData();
 
     // Escucha en tiempo real: cada vez que se agrega/modifica/elimina una cita, se actualiza automáticamente
     window._citasUnsubscribe = db.collection('citas')
@@ -338,4 +344,109 @@ document.getElementById('btn-seed-data')?.addEventListener('click', async () => 
         console.error('Error al cargar datos de simulación:', error);
         alert('Error al cargar datos de simulación.');
     }
+});
+
+// ============================================================
+//  LOGICA DE SOBRECUPOS (OVERBOOKING)
+// ============================================================
+
+function loadSobrecuposData() {
+    if (window._sobrecuposUnsubscribe) {
+        window._sobrecuposUnsubscribe();
+    }
+    
+    window._sobrecuposUnsubscribe = db.collection('sobrecupos')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+            const sobrecupos = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            renderSobrecuposList(sobrecupos);
+        }, (error) => {
+            console.error('Error al escuchar sobrecupos en tiempo real:', error);
+        });
+}
+
+function renderSobrecuposList(sobrecupos) {
+    const listContainer = document.getElementById('overbook-list');
+    if (!listContainer) return;
+    
+    listContainer.innerHTML = '';
+    
+    if (sobrecupos.length === 0) {
+        listContainer.innerHTML = '<p class="text-muted small m-0 text-center py-3">No hay sobrecupos habilitados.</p>';
+        return;
+    }
+    
+    sobrecupos.forEach(sob => {
+        const div = document.createElement('div');
+        div.className = 'cts-overbook-item';
+        div.innerHTML = `
+            <div>
+                <div class="cts-overbook-date">${sob.date}</div>
+                <div class="cts-overbook-slots" style="font-size: 0.72rem; color: #e60000; font-family: var(--font-title); font-weight: 700;">${sob.slots} ${sob.slots === 1 ? 'Hora Extra' : 'Horas Extra'}</div>
+            </div>
+            <button class="cts-btn-action-delete" onclick="deleteSobrecupo('${sob.id}')" style="padding: 4px 10px; font-size: 0.55rem;">Eliminar</button>
+        `;
+        listContainer.appendChild(div);
+    });
+}
+
+window.deleteSobrecupo = async function (dateId) {
+    if (confirm(`¿Desea eliminar el sobrecupo para el ${dateId}? Las horas volverán al horario normal.`)) {
+        try {
+            await db.collection('sobrecupos').doc(dateId).delete();
+        } catch (error) {
+            console.error('Error al eliminar sobrecupo:', error);
+            alert('No se pudo eliminar el sobrecupo.');
+        }
+    }
+};
+
+function initOverbookingForm() {
+    const form = document.getElementById('cts-overbook-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const dateInput = document.getElementById('overbook-date');
+        const slotsInput = document.getElementById('overbook-slots');
+        if (!dateInput || !slotsInput) return;
+        
+        const dateVal = dateInput.value; // YYYY-MM-DD
+        const slotsVal = Number(slotsInput.value);
+        
+        if (!dateVal) {
+            alert("Por favor seleccione una fecha.");
+            return;
+        }
+        
+        const formattedDate = formatDateToDbString(dateVal);
+        
+        try {
+            await db.collection('sobrecupos').doc(formattedDate).set({
+                date: formattedDate,
+                slots: slotsVal,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert(`Sobrecupo de ${slotsVal} ${slotsVal === 1 ? 'hora' : 'horas'} habilitado para el ${formattedDate}.`);
+            form.reset();
+        } catch (error) {
+            console.error('Error al guardar sobrecupo:', error);
+            alert('No se pudo habilitar el sobrecupo.');
+        }
+    });
+}
+
+function formatDateToDbString(dateVal) {
+    const [year, month, day] = dateVal.split('-').map(Number);
+    const months = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+    const shortMonth = months[month - 1];
+    return `${day} ${shortMonth}, ${year}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initOverbookingForm();
 });

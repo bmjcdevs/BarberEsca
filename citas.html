@@ -93,62 +93,96 @@
                     </div>
                 </div>
 
-                <!-- CONTROLS ROW: SEARCH & FILTER -->
-                <div class="cts-controls-card p-4 mb-4">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-lg-6 col-md-5 col-12">
-                            <div class="cts-search-group">
-                                <input type="text" id="search-input" class="cts-search-input" placeholder="Buscar por cliente, teléfono o servicio...">
+                <div class="row g-4">
+                    <!-- LEFT COLUMN: APPOINTMENTS -->
+                    <div class="col-lg-8 col-12">
+                        <!-- CONTROLS ROW: SEARCH & FILTER -->
+                        <div class="cts-controls-card p-4 mb-4">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-lg-8 col-md-8 col-12">
+                                    <div class="cts-search-group">
+                                        <input type="text" id="search-input" class="cts-search-input" placeholder="Buscar por cliente, teléfono o servicio...">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <select id="status-filter" class="cts-select-filter">
+                                        <option value="TODAS">TODOS LOS ESTADOS</option>
+                                        <option value="PENDIENTE">PENDIENTES</option>
+                                        <option value="COMPLETADA">COMPLETADAS</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-12">
-                            <select id="status-filter" class="cts-select-filter">
-                                <option value="TODAS">TODOS LOS ESTADOS</option>
-                                <option value="PENDIENTE">PENDIENTES</option>
-                                <option value="COMPLETADA">COMPLETADAS</option>
-                            </select>
+
+                        <!-- APPOINTMENTS LIST CONTAINER -->
+                        <div class="cts-appointments-card">
+                            <div class="cts-card-header d-flex justify-content-between align-items-center p-4">
+                                <h4 class="cts-card-title m-0">CITAS REGISTRADAS</h4>
+                                <span class="cts-records-badge" id="records-counter-badge">0 Registros</span>
+                            </div>
+                            
+                            <!-- Table wrapper -->
+                            <div class="table-responsive">
+                                <table class="table cts-table">
+                                    <thead>
+                                        <tr>
+                                            <th>CITA ID</th>
+                                            <th>CLIENTE</th>
+                                            <th>INFORMACIÓN</th>
+                                            <th>SERVICIO</th>
+                                            <th>HORARIO / FECHA</th>
+                                            <th>ESTADO</th>
+                                            <th class="text-end">ACCIONES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="appointments-tbody">
+                                        <!-- Dynamic Render from JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- No records indicator -->
+                            <div class="cts-no-records text-center py-5 d-none" id="no-records-alert">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.5" class="mb-3">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                                <h5 class="text-white mb-1">No hay citas registradas</h5>
+                                <p class="text-muted m-0">Las reservas completadas por los clientes aparecerán automáticamente aquí en tiempo real.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- APPOINTMENTS LIST CONTAINER -->
-                <div class="cts-appointments-card">
-                    <div class="cts-card-header d-flex justify-content-between align-items-center p-4">
-                        <h4 class="cts-card-title m-0">CITAS REGISTRADAS</h4>
-                        <span class="cts-records-badge" id="records-counter-badge">0 Registros</span>
-                    </div>
-                    
-                    <!-- Table wrapper -->
-                    <div class="table-responsive">
-                        <table class="table cts-table">
-                            <thead>
-                                <tr>
-                                    <th>CITA ID</th>
-                                    <th>CLIENTE</th>
-                                    <th>INFORMACIÓN</th>
-                                    <th>SERVICIO</th>
-                                    <th>HORARIO / FECHA</th>
-                                    <th>ESTADO</th>
-                                    <th class="text-end">ACCIONES</th>
-                                </tr>
-                            </thead>
-                            <tbody id="appointments-tbody">
-                                <!-- Dynamic Render from JS -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- RIGHT COLUMN: OVERBOOKING MANAGER -->
+                    <div class="col-lg-4 col-12">
+                        <div class="cts-overbook-card p-4">
+                            <h4 class="cts-card-title mb-4">GESTIÓN DE SOBRECUPOS</h4>
+                            <form id="cts-overbook-form" class="d-flex flex-column gap-3 mb-4">
+                                <div class="form-group text-start">
+                                    <label class="cts-stat-label mb-2" for="overbook-date">FECHA DE SOBRECUPO</label>
+                                    <input type="date" id="overbook-date" class="cts-search-input" required>
+                                </div>
+                                <div class="form-group text-start">
+                                    <label class="cts-stat-label mb-2" for="overbook-slots">CANTIDAD DE SOBRECUPOS (HORAS EXTRA)</label>
+                                    <select id="overbook-slots" class="cts-select-filter" required>
+                                        <option value="1">1 HORA EXTRA (HASTA 21:00)</option>
+                                        <option value="2" selected>2 HORAS EXTRA (HASTA 22:00)</option>
+                                        <option value="3">3 HORAS EXTRA (HASTA 23:00)</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="cts-btn-overbook-submit mt-2">HABILITAR SOBRECUPO</button>
+                            </form>
 
-                    <!-- No records indicator -->
-                    <div class="cts-no-records text-center py-5 d-none" id="no-records-alert">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.5" class="mb-3">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                        <h5 class="text-white mb-1">No hay citas registradas</h5>
-                        <p class="text-muted m-0">Las reservas completadas por los clientes aparecerán automáticamente aquí en tiempo real.</p>
+                            <div class="border-top border-secondary pt-4 text-start">
+                                <h4 class="cts-card-title mb-3">SOBRECUPOS ACTIVOS</h4>
+                                <div class="cts-overbook-list-container" id="overbook-list">
+                                    <!-- Dynamic Render from JS -->
+                                    <p class="text-muted small m-0 text-center py-3">Cargando sobrecupos...</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
             </div>

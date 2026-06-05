@@ -68,21 +68,29 @@ function updateScheduleSections(scheduleType) {
         afternoonHours.textContent = '/ 15:00 - 18:00';
     }
     if (eveningHours) {
-        eveningHours.textContent = scheduleType === 'saturday' ? '/ 19:00 - 20:00' : '/ 19:00 - 21:00';
+        eveningHours.textContent = '/ 19:00 - 21:00';
     }
 }
 
 // Cache de citas de Firestore para la sesión
 let cachedAppointments = [];
+let cachedSobrecupos = [];
 
 // Cargar todas las citas desde Firestore una sola vez al iniciar
 async function loadAppointmentsFromFirestore() {
     try {
         const snapshot = await db.collection('citas').get();
         cachedAppointments = snapshot.docs.map(doc => doc.data());
+
+        const sobSnapshot = await db.collection('sobrecupos').get();
+        cachedSobrecupos = sobSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
     } catch (error) {
         console.error('Error cargando citas desde Firebase:', error);
         cachedAppointments = [];
+        cachedSobrecupos = [];
     }
 }
 
@@ -254,8 +262,6 @@ document.getElementById('next-month')?.addEventListener('click', () => {
 
 // TIME SLOTS LOGIC — usa caché de Firestore
 function initTimeSlots() {
-    const timeButtons = document.querySelectorAll('.agd-time-btn');
-
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const scheduleType = selectedDay !== null
@@ -268,6 +274,42 @@ function initTimeSlots() {
     const formattedSelectedDate = selectedDay !== null
         ? `${selectedDay} ${shortMonth}, ${year}`
         : '';
+
+    // 1. Limpiar botones de sobrecupos anteriores
+    document.querySelectorAll('.agd-time-btn-overbook').forEach(btn => btn.remove());
+
+    // 2. Obtener sobrecupos para el día seleccionado
+    const overbookConfig = formattedSelectedDate
+        ? cachedSobrecupos.find(sob => sob.id === formattedSelectedDate)
+        : null;
+    const overbookSlots = overbookConfig ? Number(overbookConfig.slots) || 0 : 0;
+
+    // 3. Inyectar botones si hay sobrecupos
+    const eveningGrid = document.querySelector('#agd-section-evening .agd-time-grid');
+    if (eveningGrid && overbookSlots > 0) {
+        const startHour = 21;
+        for (let s = 0; s < overbookSlots; s++) {
+            const hour = startHour + s;
+            const timeStr = `${hour}:00`;
+            const overbookBtn = document.createElement('button');
+            overbookBtn.className = 'agd-time-btn agd-time-btn-overbook';
+            overbookBtn.setAttribute('data-time', timeStr);
+            overbookBtn.setAttribute('data-schedule', 'both');
+            overbookBtn.textContent = timeStr;
+            eveningGrid.appendChild(overbookBtn);
+        }
+    }
+
+    // 4. Actualizar texto de rango de horas de la noche
+    const eveningHours = document.getElementById('agd-evening-hours');
+    if (eveningHours) {
+        eveningHours.textContent = overbookSlots > 0
+            ? `/ 19:00 - ${21 + overbookSlots}:00`
+            : '/ 19:00 - 21:00';
+    }
+
+    // 5. Query de todos los botones de hora (incluyendo los recién inyectados)
+    const timeButtons = document.querySelectorAll('.agd-time-btn');
 
     // Horarios bloqueados para la fecha seleccionada (desde Firestore)
     const bookedTimesForDate = formattedSelectedDate
