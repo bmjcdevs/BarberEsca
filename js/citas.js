@@ -145,8 +145,8 @@ function loadDashboardData() {
                 }
             });
 
+            _allAppointments = appointments;
             renderAppointmentsTable(appointments);
-            updateStats(appointments);
         }, (error) => {
             console.error('Error al escuchar citas en tiempo real:', error);
         });
@@ -211,11 +211,16 @@ function renderAppointmentsTable(appointments) {
 }
 
 // UPDATE METRIC CARDS
-function updateStats(appointments) {
+function updateStats(appointments, formattedFilterDate = '') {
     const statToday = document.getElementById('stat-today-count');
     const statPending = document.getElementById('stat-pending-count');
     const statCompleted = document.getElementById('stat-completed-count');
     const statIncome = document.getElementById('stat-income-count');
+
+    const labelToday = document.getElementById('label-today');
+    const labelPending = document.getElementById('label-pending');
+    const labelCompleted = document.getElementById('label-completed');
+    const labelIncome = document.getElementById('label-income');
 
     if (!statToday) return;
 
@@ -224,18 +229,39 @@ function updateStats(appointments) {
     const shortMonth = monthNames[today.getMonth()].substring(0, 3);
     const todayString = `${today.getDate()} ${shortMonth}`;
 
+    let filteredList = appointments;
+    
+    if (formattedFilterDate) {
+        filteredList = appointments.filter(app => app.date && app.date.toUpperCase() === formattedFilterDate);
+        
+        if (labelToday) labelToday.textContent = `Citas del ${formattedFilterDate}`;
+        if (labelPending) labelPending.textContent = "Pendientes del Día";
+        if (labelCompleted) labelCompleted.textContent = "Cortes Realizados (Día)";
+        if (labelIncome) labelIncome.textContent = "Ingresos del Día";
+    } else {
+        if (labelToday) labelToday.textContent = "Citas de Hoy";
+        if (labelPending) labelPending.textContent = "Citas Pendientes";
+        if (labelCompleted) labelCompleted.textContent = "Citas Completadas";
+        if (labelIncome) labelIncome.textContent = "Ingresos Estimados";
+    }
+
     const todayCount = appointments.filter(app => app.date && app.date.toUpperCase().includes(todayString)).length;
-    const pendingCount = appointments.filter(app => app.status === 'PENDIENTE').length;
-    const completedCount = appointments.filter(app => app.status === 'COMPLETADA').length;
+    const pendingCount = filteredList.filter(app => app.status === 'PENDIENTE').length;
+    const completedCount = filteredList.filter(app => app.status === 'COMPLETADA').length;
 
     let totalIncome = 0;
-    appointments.forEach(app => {
+    filteredList.forEach(app => {
         if (app.status === 'COMPLETADA') {
             totalIncome += getServicePrice(app.service, app.price);
         }
     });
 
-    statToday.textContent = todayCount;
+    if (formattedFilterDate) {
+        statToday.textContent = filteredList.length;
+    } else {
+        statToday.textContent = todayCount;
+    }
+
     statPending.textContent = pendingCount;
     statCompleted.textContent = completedCount;
     statIncome.textContent = formatCOP(totalIncome);
@@ -336,6 +362,9 @@ function applyFilters() {
             noRecords.classList.add('d-none');
         }
     }
+
+    // Actualizar estadísticas basadas en la fecha filtrada
+    updateStats(_allAppointments || [], formattedFilterDate);
 }
 
 // BOTÓN DATOS DE SIMULACIÓN (para pruebas)
