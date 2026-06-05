@@ -249,6 +249,35 @@ document.getElementById('next-month')?.addEventListener('click', () => {
     }
 });
 
+function addOneHour(timeStr) {
+    const [h, m] = timeStr.split(':').map(Number);
+    let newH = h + 1;
+    return `${newH}:${m.toString().padStart(2, '0')}`;
+}
+
+const BASE_SECTIONS = {
+    morning: {
+        id: 'agd-section-saturday-morning',
+        baseTimes: ["10:00", "11:00"],
+        schedule: 'saturday'
+    },
+    midday: {
+        id: 'agd-section-midday',
+        baseTimes: ["12:00", "13:00", "14:00"],
+        schedule: 'both'
+    },
+    afternoon: {
+        id: 'agd-section-afternoon',
+        baseTimes: ["15:00", "16:00", "17:00", "18:00"],
+        schedule: 'both'
+    },
+    evening: {
+        id: 'agd-section-evening',
+        baseTimes: ["19:00", "20:00"],
+        schedule: 'both'
+    }
+};
+
 // TIME SLOTS LOGIC — usa caché de Firestore
 function initTimeSlots() {
     const year = currentDate.getFullYear();
@@ -264,40 +293,94 @@ function initTimeSlots() {
         ? `${selectedDay} ${shortMonth}, ${year}`
         : '';
 
-    // 1. Limpiar botones de sobrecupos anteriores
-    document.querySelectorAll('.agd-time-btn-overbook').forEach(btn => btn.remove());
-
-    // 2. Obtener sobrecupos para el día seleccionado
+    // 1. Obtener sobrecupos para el día seleccionado
     const overbookConfig = formattedSelectedDate
         ? cachedSobrecupos.find(sob => sob.id === formattedSelectedDate)
         : null;
-    const overbookSlots = overbookConfig ? Number(overbookConfig.slots) || 0 : 0;
-
-    // 3. Inyectar botones si hay sobrecupos
-    const eveningGrid = document.querySelector('#agd-section-evening .agd-time-grid');
-    if (eveningGrid && overbookSlots > 0) {
-        const startHour = 21;
-        for (let s = 0; s < overbookSlots; s++) {
-            const hour = startHour + s;
-            const timeStr = `${hour}:00`;
-            const overbookBtn = document.createElement('button');
-            overbookBtn.className = 'agd-time-btn agd-time-btn-overbook';
-            overbookBtn.setAttribute('data-time', timeStr);
-            overbookBtn.setAttribute('data-schedule', 'both');
-            overbookBtn.textContent = timeStr;
-            eveningGrid.appendChild(overbookBtn);
+    
+    let overbookTimes = [];
+    if (overbookConfig) {
+        if (overbookConfig.times && Array.isArray(overbookConfig.times)) {
+            overbookTimes = overbookConfig.times;
+        } else if (Number(overbookConfig.slots) > 0) {
+            // Retrocompatibilidad
+            const slotsCount = Number(overbookConfig.slots);
+            if (slotsCount >= 1) overbookTimes.push("21:00");
+            if (slotsCount >= 2) overbookTimes.push("22:00");
+            if (slotsCount >= 3) overbookTimes.push("23:00");
         }
     }
+
+    // 2. Distribuir horarios
+    const sectionTimes = {
+        morning: [...BASE_SECTIONS.morning.baseTimes],
+        midday: [...BASE_SECTIONS.midday.baseTimes],
+        afternoon: [...BASE_SECTIONS.afternoon.baseTimes],
+        evening: [...BASE_SECTIONS.evening.baseTimes]
+    };
+
+    overbookTimes.forEach(t => {
+        const hour = parseInt(t.split(':')[0], 10);
+        let targetSection = 'evening';
+        
+        if (hour >= 10 && hour <= 11) {
+            targetSection = 'morning';
+        } else if (hour >= 12 && hour <= 14) {
+            targetSection = 'midday';
+        } else if (hour >= 15 && hour <= 18) {
+            targetSection = 'afternoon';
+        } else if (hour >= 19) {
+            targetSection = 'evening';
+        }
+        
+        if (!sectionTimes[targetSection].includes(t)) {
+            sectionTimes[targetSection].push(t);
+        }
+    });
+
+    // 3. Generar y ordenar botones en el DOM para cada sección
+    Object.keys(BASE_SECTIONS).forEach(key => {
+        const grid = document.querySelector(`#${BASE_SECTIONS[key].id} .agd-time-grid`);
+        if (grid) {
+            grid.innerHTML = '';
+            
+            // Ordenar cronológicamente
+            sectionTimes[key].sort((a, b) => {
+                const [hA, mA] = a.split(':').map(Number);
+                const [hB, mB] = b.split(':').map(Number);
+                return hA !== hB ? hA - hB : mA - mB;
+            });
+
+            sectionTimes[key].forEach(t => {
+                const btn = document.createElement('button');
+                const isOverbook = !BASE_SECTIONS[key].baseTimes.includes(t);
+                btn.className = isOverbook ? 'agd-time-btn agd-time-btn-overbook' : 'agd-time-btn';
+                btn.setAttribute('data-time', t);
+                btn.setAttribute('data-schedule', BASE_SECTIONS[key].schedule);
+                btn.textContent = t;
+                grid.appendChild(btn);
+            });
+        }
+    });
 
     // 4. Actualizar texto de rango de horas de la noche
     const eveningHours = document.getElementById('agd-evening-hours');
     if (eveningHours) {
-        eveningHours.textContent = overbookSlots > 0
-            ? `/ 19:00 - ${21 + overbookSlots}:00`
-            : '/ 19:00 - 21:00';
+        const evTimes = sectionTimes.evening;
+        if (evTimes.length > 0) {
+            const lastTime = evTimes[evTimes.length - 1];
+            if (lastTime !== "20:00" && lastTime !== "19:00") {
+                const endTime = addOneHour(lastTime);
+                eveningHours.textContent = `/ 19:00 - ${endTime}`;
+            } else {
+                eveningHours.textContent = '/ 19:00 - 21:00';
+            }
+        } else {
+            eveningHours.textContent = '/ 19:00 - 21:00';
+        }
     }
 
-    // 5. Query de todos los botones de hora (incluyendo los recién inyectados)
+    // 5. Query de todos los botones de hora (recién inyectados)
     const timeButtons = document.querySelectorAll('.agd-time-btn');
 
     // Horarios bloqueados para la fecha seleccionada (desde Firestore)

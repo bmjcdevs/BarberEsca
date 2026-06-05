@@ -170,14 +170,26 @@
                                     <input type="date" id="overbook-date" class="cts-search-input" required>
                                 </div>
                                 <div class="form-group text-start">
-                                    <label class="cts-stat-label mb-2" for="overbook-slots">CANTIDAD DE SOBRECUPOS (HORAS EXTRA)</label>
-                                    <select id="overbook-slots" class="cts-select-filter" required>
-                                        <option value="1">1 HORA EXTRA (HASTA 21:00)</option>
-                                        <option value="2" selected>2 HORAS EXTRA (HASTA 22:00)</option>
-                                        <option value="3">3 HORAS EXTRA (HASTA 23:00)</option>
+                                    <label class="cts-stat-label mb-2" for="overbook-time">SELECCIONAR HORA DE SOBRECUPO</label>
+                                    <select id="overbook-time" class="cts-select-filter" required>
+                                        <option value="10:30">10:30 AM</option>
+                                        <option value="11:30">11:30 AM</option>
+                                        <option value="12:30">12:30 PM</option>
+                                        <option value="13:30" selected>13:30 PM (01:30 PM)</option>
+                                        <option value="14:30">14:30 PM (02:30 PM)</option>
+                                        <option value="15:30">15:30 PM (03:30 PM)</option>
+                                        <option value="16:30">16:30 PM (04:30 PM)</option>
+                                        <option value="17:30">17:30 PM (05:30 PM)</option>
+                                        <option value="18:30">18:30 PM (06:30 PM)</option>
+                                        <option value="19:30">19:30 PM (07:30 PM)</option>
+                                        <option value="20:30">20:30 PM (08:30 PM)</option>
+                                        <option value="21:00">21:00 PM (09:00 PM)</option>
+                                        <option value="21:30">21:30 PM (09:30 PM)</option>
+                                        <option value="22:00">22:00 PM (10:00 PM)</option>
+                                        <option value="22:30">22:30 PM (10:30 PM)</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="cts-btn-overbook-submit mt-2">HABILITAR SOBRECUPO</button>
+                                <button type="submit" class="cts-btn-overbook-submit mt-2">HABILITAR HORARIO</button>
                             </form>
 
                             <div class="border-top border-secondary pt-4 text-start">

@@ -426,24 +426,66 @@ function renderSobrecuposList(sobrecupos) {
         return;
     }
     
+    let hasItems = false;
+    
     sobrecupos.forEach(sob => {
-        const div = document.createElement('div');
-        div.className = 'cts-overbook-item';
-        div.innerHTML = `
-            <div>
-                <div class="cts-overbook-date">${sob.date}</div>
-                <div class="cts-overbook-slots" style="font-size: 0.72rem; color: #e60000; font-family: var(--font-title); font-weight: 700;">${sob.slots} ${sob.slots === 1 ? 'Hora Extra' : 'Horas Extra'}</div>
-            </div>
-            <button class="cts-btn-action-delete" onclick="deleteSobrecupo('${sob.id}')" style="padding: 4px 10px; font-size: 0.55rem;">Eliminar</button>
-        `;
-        listContainer.appendChild(div);
+        let times = sob.times || [];
+        // Compatibilidad con registros antiguos
+        if (times.length === 0 && sob.slots) {
+            if (sob.slots >= 1) times.push("21:00");
+            if (sob.slots >= 2) times.push("22:00");
+            if (sob.slots >= 3) times.push("23:00");
+        }
+        
+        times.forEach(t => {
+            hasItems = true;
+            const div = document.createElement('div');
+            div.className = 'cts-overbook-item';
+            div.innerHTML = `
+                <div>
+                    <div class="cts-overbook-date">${sob.date}</div>
+                    <div class="cts-overbook-slots" style="font-size: 0.72rem; color: #e60000; font-family: var(--font-title); font-weight: 700;">${t}</div>
+                </div>
+                <button class="cts-btn-action-delete" onclick="deleteSpecificSobrecupo('${sob.id}', '${t}')" style="padding: 4px 10px; font-size: 0.55rem;">Eliminar</button>
+            `;
+            listContainer.appendChild(div);
+        });
     });
+    
+    if (!hasItems) {
+        listContainer.innerHTML = '<p class="text-muted small m-0 text-center py-3">No hay sobrecupos habilitados.</p>';
+    }
 }
 
-window.deleteSobrecupo = async function (dateId) {
-    if (confirm(`¿Desea eliminar el sobrecupo para el ${dateId}? Las horas volverán al horario normal.`)) {
+window.deleteSpecificSobrecupo = async function (dateId, timeStr) {
+    if (confirm(`¿Desea eliminar el sobrecupo para las ${timeStr} el ${dateId}? La hora volverá al horario normal.`)) {
         try {
-            await db.collection('sobrecupos').doc(dateId).delete();
+            const docRef = db.collection('sobrecupos').doc(dateId);
+            const doc = await docRef.get();
+            
+            if (doc.exists) {
+                const data = doc.data();
+                let times = data.times || [];
+                
+                // Fallback de compatibilidad
+                if (times.length === 0 && data.slots) {
+                    if (data.slots >= 1) times.push("21:00");
+                    if (data.slots >= 2) times.push("22:00");
+                    if (data.slots >= 3) times.push("23:00");
+                }
+                
+                // Filtrar el horario eliminado
+                const newTimes = times.filter(t => t !== timeStr);
+                
+                if (newTimes.length === 0) {
+                    await docRef.delete();
+                } else {
+                    await docRef.update({
+                        times: newTimes,
+                        slots: newTimes.length // Mantener slots para retrocompatibilidad
+                    });
+                }
+            }
         } catch (error) {
             console.error('Error al eliminar sobrecupo:', error);
             alert('No se pudo eliminar el sobrecupo.');
@@ -459,11 +501,11 @@ function initOverbookingForm() {
         e.preventDefault();
         
         const dateInput = document.getElementById('overbook-date');
-        const slotsInput = document.getElementById('overbook-slots');
-        if (!dateInput || !slotsInput) return;
+        const timeInput = document.getElementById('overbook-time');
+        if (!dateInput || !timeInput) return;
         
         const dateVal = dateInput.value; // YYYY-MM-DD
-        const slotsVal = Number(slotsInput.value);
+        const timeVal = timeInput.value; // HH:MM
         
         if (!dateVal) {
             alert("Por favor seleccione una fecha.");
@@ -473,12 +515,42 @@ function initOverbookingForm() {
         const formattedDate = formatDateToDbString(dateVal);
         
         try {
-            await db.collection('sobrecupos').doc(formattedDate).set({
+            const docRef = db.collection('sobrecupos').doc(formattedDate);
+            const doc = await docRef.get();
+            
+            let times = [];
+            if (doc.exists) {
+                const data = doc.data();
+                times = data.times || [];
+                // Fallback compatibilidad
+                if (times.length === 0 && data.slots) {
+                    if (data.slots >= 1) times.push("21:00");
+                    if (data.slots >= 2) times.push("22:00");
+                    if (data.slots >= 3) times.push("23:00");
+                }
+            }
+            
+            if (times.includes(timeVal)) {
+                alert(`El horario de sobrecupo ${timeVal} ya está habilitado para el ${formattedDate}.`);
+                return;
+            }
+            
+            times.push(timeVal);
+            // Ordenar horas cronológicamente antes de guardar
+            times.sort((a, b) => {
+                const [hA, mA] = a.split(':').map(Number);
+                const [hB, mB] = b.split(':').map(Number);
+                return hA !== hB ? hA - hB : mA - mB;
+            });
+            
+            await docRef.set({
                 date: formattedDate,
-                slots: slotsVal,
+                times: times,
+                slots: times.length, // Retrocompatibilidad
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            alert(`Sobrecupo de ${slotsVal} ${slotsVal === 1 ? 'hora' : 'horas'} habilitado para el ${formattedDate}.`);
+            
+            alert(`Horario de sobrecupo ${timeVal} habilitado para el ${formattedDate}.`);
             form.reset();
         } catch (error) {
             console.error('Error al guardar sobrecupo:', error);
