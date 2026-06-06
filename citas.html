@@ -25,13 +25,15 @@
                 </svg>
             </div>
             <h2 class="cts-lock-title mb-2">AUTENTICACIÓN REQUERIDA</h2>
-            <p class="cts-lock-desc text-gray mb-4">Acceso restringido para Barberos autorizados. Por favor, introduzca su PIN de seguridad para continuar.</p>
-            
+            <p class="cts-lock-desc text-gray mb-4">Acceso restringido para Barberos autorizados. Por favor, introduzca
+                su PIN de seguridad para continuar.</p>
+
             <form id="cts-pin-form" class="d-flex flex-column gap-3 max-w-300 mx-auto">
-                <input type="password" id="cts-pin-input" class="cts-pin-input text-center" maxlength="4" placeholder="••••" required autofocus>
+                <input type="password" id="cts-pin-input" class="cts-pin-input text-center" maxlength="4"
+                    placeholder="••••" required autofocus>
                 <button type="submit" class="cts-pin-btn">VERIFICAR IDENTIDAD</button>
             </form>
-            
+
             <div class="cts-pin-hint mt-3 text-muted">PIN por defecto: 1234</div>
             <a href="index.html" class="cts-lock-back-link mt-4 d-inline-block">Regresar al Inicio</a>
         </div>
@@ -39,7 +41,7 @@
 
     <!-- MAIN DASHBOARD CONTENT (Initially hidden or style blur applied via locked class) -->
     <div class="cts-dashboard-wrapper d-none" id="cts-dashboard-main">
-        
+
         <!-- HEADER / NAVBAR -->
         <header class="cts-header">
             <nav class="navbar navbar-expand-lg navbar-dark bg-transparent py-3">
@@ -47,7 +49,7 @@
                     <a class="navbar-brand cts-logo" href="index.html">
                         <span class="cts-logo-accent">FOCUS</span> BARBER PANEL
                     </a>
-                    
+
                     <div class="d-flex align-items-center gap-3">
                         <span class="cts-barber-badge d-none d-sm-inline">
                             <span class="cts-indicator-dot"></span>
@@ -101,13 +103,17 @@
                             <div class="row g-3 align-items-center">
                                 <div class="col-lg-5 col-md-5 col-12">
                                     <div class="cts-search-group">
-                                        <input type="text" id="search-input" class="cts-search-input" placeholder="Buscar por cliente, teléfono o servicio...">
+                                        <input type="text" id="search-input" class="cts-search-input"
+                                            placeholder="Buscar por cliente, teléfono o servicio...">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="d-flex align-items-center gap-2">
-                                        <input type="date" id="date-filter" class="cts-search-input" style="color-scheme: dark;">
-                                        <button id="btn-clear-date" class="cts-btn-logout" style="padding: 10px 14px; font-size: 0.72rem; white-space: nowrap; height: 100%;" title="Limpiar fecha">Limpiar</button>
+                                        <input type="date" id="date-filter" class="cts-search-input"
+                                            style="color-scheme: dark;">
+                                        <button id="btn-clear-date" class="cts-btn-logout"
+                                            style="padding: 10px 14px; font-size: 0.72rem; white-space: nowrap; height: 100%;"
+                                            title="Limpiar fecha">Limpiar</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-12">
@@ -126,7 +132,7 @@
                                 <h4 class="cts-card-title m-0">CITAS REGISTRADAS</h4>
                                 <span class="cts-records-badge" id="records-counter-badge">0 Registros</span>
                             </div>
-                            
+
                             <!-- Table wrapper -->
                             <div class="table-responsive">
                                 <table class="table cts-table">
@@ -149,13 +155,15 @@
 
                             <!-- No records indicator -->
                             <div class="cts-no-records text-center py-5 d-none" id="no-records-alert">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.5" class="mb-3">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555555"
+                                    stroke-width="1.5" class="mb-3">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <line x1="12" y1="8" x2="12" y2="12"></line>
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                 </svg>
                                 <h5 class="text-white mb-1">No hay citas registradas</h5>
-                                <p class="text-muted m-0">Las reservas completadas por los clientes aparecerán automáticamente aquí en tiempo real.</p>
+                                <p class="text-muted m-0">Las reservas completadas por los clientes aparecerán
+                                    automáticamente aquí en tiempo real.</p>
                             </div>
                         </div>
                     </div>
@@ -170,23 +178,24 @@
                                     <input type="date" id="overbook-date" class="cts-search-input" required>
                                 </div>
                                 <div class="form-group text-start">
-                                    <label class="cts-stat-label mb-2" for="overbook-time">SELECCIONAR HORA DE SOBRECUPO</label>
+                                    <label class="cts-stat-label mb-2" for="overbook-time">SELECCIONAR HORA DE
+                                        SOBRECUPO</label>
                                     <select id="overbook-time" class="cts-select-filter" required>
                                         <option value="10:30">10:30 AM</option>
                                         <option value="11:30">11:30 AM</option>
                                         <option value="12:30">12:30 PM</option>
-                                        <option value="13:30" selected>13:30 PM (01:30 PM)</option>
-                                        <option value="14:30">14:30 PM (02:30 PM)</option>
-                                        <option value="15:30">15:30 PM (03:30 PM)</option>
-                                        <option value="16:30">16:30 PM (04:30 PM)</option>
-                                        <option value="17:30">17:30 PM (05:30 PM)</option>
-                                        <option value="18:30">18:30 PM (06:30 PM)</option>
-                                        <option value="19:30">19:30 PM (07:30 PM)</option>
-                                        <option value="20:30">20:30 PM (08:30 PM)</option>
-                                        <option value="21:00">21:00 PM (09:00 PM)</option>
-                                        <option value="21:30">21:30 PM (09:30 PM)</option>
-                                        <option value="22:00">22:00 PM (10:00 PM)</option>
-                                        <option value="22:30">22:30 PM (10:30 PM)</option>
+                                        <option value="13:30" selected>13:30 PM </option>
+                                        <option value="14:30">14:30 PM </option>
+                                        <option value="15:30">15:30 PM </option>
+                                        <option value="16:30">16:30 PM </option>
+                                        <option value="17:30">17:30 PM </option>
+                                        <option value="18:30">18:30 PM </option>
+                                        <option value="19:30">19:30 PM </option>
+                                        <option value="20:30">20:30 PM </option>
+                                        <option value="21:00">21:00 PM </option>
+                                        <option value="21:30">21:30 PM </option>
+                                        <option value="22:00">22:00 PM </option>
+                                        <option value="22:30">22:30 PM </option>
                                     </select>
                                 </div>
                                 <button type="submit" class="cts-btn-overbook-submit mt-2">HABILITAR HORARIO</button>
