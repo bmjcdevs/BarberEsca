@@ -702,10 +702,11 @@ p {
   box-shadow: 0 6px 20px rgba(255, 42, 42, 0.6);
 }
 
-.fab-calendar svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
+.fab-calendar svg,
+.fab-calendar img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 /* Custom Responsive Overrides for Bootstrap grid sizes */
