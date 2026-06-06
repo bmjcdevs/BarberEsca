@@ -549,6 +549,13 @@ body {
   justify-content: center;
 }
 
+.agd-success-modal .modal-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .agd-success-modal .modal-title {
   font-family: var(--font-title);
   font-weight: 900;
