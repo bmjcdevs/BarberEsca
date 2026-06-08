@@ -419,12 +419,14 @@ h1, h2, h3, h4 {
 .srv-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 28px 28px 28px 32px;
+  padding: 0;
   height: 100%;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
 }
 
 .srv-card::before {
@@ -435,6 +437,7 @@ h1, h2, h3, h4 {
   bottom: 0;
   width: 3px;
   background: var(--primary-red);
+  z-index: 10;
 }
 
 .srv-card:hover {
@@ -445,6 +448,44 @@ h1, h2, h3, h4 {
 .srv-card.selected {
   border-color: var(--primary-red);
   box-shadow: 0 0 0 1px var(--primary-red), 0 8px 30px var(--primary-red-glow);
+}
+
+.srv-card-img-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.srv-card-img-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--bg-card), transparent);
+  pointer-events: none;
+}
+
+.srv-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%) brightness(0.75);
+  transition: var(--transition);
+}
+
+.srv-card:hover .srv-card-img {
+  filter: grayscale(0%) brightness(0.9);
+  transform: scale(1.04);
+}
+
+.srv-card-content {
+  padding: 28px 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .srv-card-top {
@@ -632,5 +673,6 @@ h1, h2, h3, h4 {
 
   .srv-price { font-size: 1.6rem; }
   .srv-card-featured-left { padding: 20px 20px 20px 28px; }
-  .srv-card { padding: 22px 20px 22px 26px; }
+  .srv-card { padding: 0; }
+  .srv-card-content { padding: 24px 20px 20px 24px; }
 }
