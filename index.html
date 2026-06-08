@@ -135,39 +135,63 @@
                 </div>
             </div>
 
-            <!-- Grid Layout con las 6 imágenes de cortes -->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/Corte1.jpeg" alt="Corte 1" class="w-100 h-100 object-fit-cover">
-                    </div>
+            <!-- Carousel de imágenes de cortes -->
+            <div id="galleryCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+                <!-- Indicators -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="4"
+                        aria-label="Slide 5"></button>
                 </div>
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/corte2.jpeg" alt="Corte 2" class="w-100 h-100 object-fit-cover">
+
+                <!-- Slides -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="gallery-item large-carousel-height">
+                            <img src="imagenes/Corte1.jpeg" alt="Corte 1" class="w-100 h-100 object-fit-cover">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/Corte3.jpeg" alt="Corte 3" class="w-100 h-100 object-fit-cover">
+                    <div class="carousel-item">
+                        <div class="gallery-item large-carousel-height">
+                            <img src="imagenes/corte2.jpeg" alt="Corte 2" class="w-100 h-100 object-fit-cover">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/Corte 4.jpeg" alt="Corte 4" class="w-100 h-100 object-fit-cover">
+                    <div class="carousel-item">
+                        <div class="gallery-item large-carousel-height">
+                            <img src="imagenes/Corte3.jpeg" alt="Corte 3" class="w-100 h-100 object-fit-cover">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/Corte 5.jpeg" alt="Corte 5" class="w-100 h-100 object-fit-cover">
+                    <div class="carousel-item">
+                        <div class="gallery-item large-carousel-height">
+                            <img src="imagenes/Corte 4.jpeg" alt="Corte 4" class="w-100 h-100 object-fit-cover">
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="gallery-item small-bootstrap-height">
-                        <img src="imagenes/Corte6.jpeg" alt="Corte 6" class="w-100 h-100 object-fit-cover"
-                            style="object-position: center top;">
+                    <div class="carousel-item">
+                        <div class="gallery-item large-carousel-height">
+                            <img src="imagenes/Corte 5.jpeg" alt="Corte 5" class="w-100 h-100 object-fit-cover">
+                        </div>
                     </div>
+
                 </div>
+
+                <!-- Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
 
             <!-- Banner de precisión extrema -->
