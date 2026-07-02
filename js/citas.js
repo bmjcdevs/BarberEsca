@@ -122,7 +122,6 @@ function loadDashboardData() {
 
     // Escucha en tiempo real: cada vez que se agrega/modifica/elimina una cita, se actualiza automáticamente
     window._citasUnsubscribe = db.collection('citas')
-        .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
             const appointments = snapshot.docs.map(doc => ({
                 docId: doc.id, // ID de Firestore (necesario para editar/borrar)
@@ -432,7 +431,6 @@ function loadSobrecuposData() {
     }
     
     window._sobrecuposUnsubscribe = db.collection('sobrecupos')
-        .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
             const sobrecupos = snapshot.docs.map(doc => ({
                 id: doc.id,
